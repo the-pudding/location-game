@@ -1,6 +1,7 @@
 <script>
 	import { format } from "d3";
 	import { guesses, clueIndex } from "$stores/misc.js";
+	import { Lock, MapPin } from "lucide-svelte";
 
 	export let images;
 	export let carousel;
@@ -11,18 +12,22 @@
 	{#each images as image, i}
 		{@const answered = i < $clueIndex}
 		{@const disabled = i > $clueIndex}
+		{@const current = i === $clueIndex}
 		{@const active = i === currentPageIndex}
-		{@const text = answered
-			? format(",")($guesses[i]?.distance)
-			: active
-			? "🤔"
-			: "🔒"}
+		{@const text = answered ? format(",")($guesses[i]?.distance) : undefined}
 		<button
 			{disabled}
 			data-index={i + 1}
 			class:active
-			on:click={() => carousel.goTo(i)}>{text}</button
+			on:click={() => carousel.goTo(i)}
 		>
+			{#if answered}
+				{text}
+			{:else if current}<MapPin />
+			{:else}
+				<Lock />
+			{/if}
+		</button>
 	{/each}
 </div>
 
@@ -39,6 +44,7 @@
 		margin: 0 4px;
 		font-size: var(--12px);
 		position: relative;
+		border: 2px solid transparent;
 	}
 
 	button:after {
@@ -55,7 +61,7 @@
 	}
 
 	button.active {
-		background: gray;
+		border: 2px solid var(--color-fg);
 	}
 
 	@media only screen and (min-width: 400px) {
