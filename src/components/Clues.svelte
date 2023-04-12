@@ -7,17 +7,24 @@
 	export let images;
 
 	let carousel;
+	let pageIndex = 1;
 
 	const dots = false;
 
+	function onPageChange(e) {
+		pageIndex = e.detail + 1;
+	}
+
 	$: swiping = !$mq.desktop;
 	$: arrows = $mq.desktop;
-
 	$: carousel?.goTo($clueIndex);
 </script>
 
 <section id="images">
-	<p class="counter">image x of 5</p>
+	<div class="info">
+		<p>Five images. Five guesses. One location.</p>
+		<p class="counter">Image {pageIndex} of 5</p>
+	</div>
 	<Carousel
 		bind:this={carousel}
 		infinite={false}
@@ -27,6 +34,7 @@
 		let:currentPageIndex
 		let:showPrevPage
 		let:showNextPage
+		on:pageChange{onPageChange}
 	>
 		<button
 			slot="prev"
@@ -58,7 +66,12 @@
 		padding: 16px 8px 0 8px;
 	}
 
-	p.counter {
+	.info {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.info p {
 		margin: 0;
 		margin-bottom: 4px;
 		line-height: 1;
