@@ -72,7 +72,6 @@
 			dashArray: "5, 10"
 		}).addTo(group);
 
-		console.log(group);
 		map.fitBounds(group.getBounds(), { padding: [50, 50] });
 	}
 

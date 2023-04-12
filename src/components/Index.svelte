@@ -13,10 +13,12 @@
 	let data;
 	let index;
 	let visible;
+	let game;
 
 	$: latitude = data?.circle?.latitude;
 	$: longitude = data?.circle?.longitude;
 	$: images = data?.images;
+	$: game = data?.game;
 
 	onMount(async () => {
 		const timestamp = Date.now();
@@ -31,7 +33,7 @@
 		<Guess {latitude} {longitude} />
 	{/if}
 	<About />
-	<Stats />
+	<Stats {game} />
 </article>
 
 <style>

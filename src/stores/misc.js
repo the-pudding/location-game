@@ -13,8 +13,9 @@ export let gameOver = derived(
 );
 export let best = derived(guesses, ($guesses) => {
 	if (!$guesses.length) return;
-	$guesses.sort((a, b) => ascending(a.distance, b.distance));
-	return $guesses[0];
+	const copy = $guesses.map((d) => ({ ...d }));
+	copy.sort((a, b) => ascending(a.distance, b.distance));
+	return copy[0];
 });
 
 export const stats = persisted("pudding_location_game_stats", []);
