@@ -1,7 +1,7 @@
 <!-- LeafletMap.svelte -->
 <script>
 	import { onMount } from "svelte";
-	import { guesses, clueIndex } from "$stores/misc.js";
+	import { guesses, clueIndex, best, gameOver } from "$stores/misc.js";
 	import "leaflet/dist/leaflet.css";
 
 	export let latitude;
@@ -11,6 +11,7 @@
 
 	const MILES_IN_A_METER = 0.000621371;
 	const maxZoom = 14;
+	const iconSize = [20, 20];
 
 	let mapEl;
 	let L;
@@ -21,7 +22,7 @@
 	let answerLocation;
 
 	$: if (L && latitude) answerLocation = L.latLng(latitude, longitude);
-	$: gameOver = false;
+	$: if ($gameOver) showAnswer();
 
 	function setTileLayer(i) {
 		if (i === 0)
@@ -54,15 +55,25 @@
 	}
 
 	function showAnswer() {
-		// const guessLocation = e.latlng;
-		// L.marker(guessLocation, { icon: iconGuess }).addTo(group);
+		group.clearLayers();
+
+		const iconGuess = L.divIcon({
+			className: "icon-guess",
+			html: `<span></span>`,
+			iconSize
+		});
+
+		L.marker($best.location, { icon: iconGuess }).addTo(group);
 
 		L.marker(answerLocation, { icon: iconAnswer }).addTo(group);
 
-		// L.polyline([answerLocation, guessLocation], {
-		// 	color: "black",
-		// 	dashArray: "5, 10"
-		// }).addTo(group);
+		L.polyline([answerLocation, $best.location], {
+			color: "black",
+			dashArray: "5, 10"
+		}).addTo(group);
+
+		console.log(group);
+		map.fitBounds(group.getBounds(), { padding: [50, 50] });
 	}
 
 	function handleMapClick(e) {
@@ -75,7 +86,7 @@
 			const iconGuess = L.divIcon({
 				className: "icon-guess",
 				html: `<span>${guess.i + 1}</span>`,
-				iconSize: [20, 20]
+				iconSize
 			});
 
 			L.marker(guess.location, { icon: iconGuess }).addTo(group);
@@ -85,7 +96,7 @@
 		const iconGuess = L.divIcon({
 			className: "icon-guess",
 			html: `<span>${$clueIndex + 1}</span>`,
-			iconSize: [20, 20]
+			iconSize
 		});
 
 		L.marker(location, { icon: iconGuess }).addTo(group);
@@ -106,18 +117,21 @@
 		// Create custom marker icons
 		// iconGuess = L.icon({
 		// 	iconUrl: "assets/icons/user.svg",
-		// 	iconSize: [24, 24],
+		// 	iconSize
 		// 	iconAnchor: [-12, 24]
 		// });
 		iconAnswer = L.divIcon({
-			className: "icon-answer"
+			className: "icon-answer",
+			iconSize: [32, 32],
+			html: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flag"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" x2="4" y1="22" y2="15"></line></svg>'
 		});
 
 		map = L.map(mapEl).setView([37.8, -96], 3);
 
 		setTileLayer(0);
 
-		group = L.layerGroup().addTo(map);
+		group = L.featureGroup();
+		group.addTo(map);
 
 		map.on("click", handleMapClick);
 	});
@@ -136,7 +150,7 @@
 	}
 
 	:global(.icon-guess span) {
-		background: white;
+		background: var(--color-bg);
 		display: block;
 		width: 100%;
 		height: 100%;
@@ -147,9 +161,20 @@
 	}
 
 	:global(.icon-answer) {
-		width: 32px;
-		height: 32px;
-		background: green;
+		background: var(--color-fg);
+		border-radius: 50%;
+		text-align: center;
+	}
+
+	:global(.icon-answer svg) {
+		display: inline-block;
+		vertical-align: middle;
+		transform: translate(0, 4px);
+		width: 50%;
+	}
+
+	:global(.icon-answer svg path, .icon-answer svg line) {
+		stroke: var(--color-bg);
 	}
 
 	@media only screen and (min-width: 600px) {

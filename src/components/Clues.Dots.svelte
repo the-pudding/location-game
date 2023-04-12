@@ -9,13 +9,14 @@
 
 <div class="dots">
 	{#each images as image, i}
+		{@const answered = i < $clueIndex}
 		{@const disabled = i > $clueIndex}
 		{@const active = i === currentPageIndex}
-		{@const text = active
+		{@const text = answered
+			? format(",")($guesses[i]?.distance)
+			: active
 			? "🤔"
-			: disabled
-			? "🔒"
-			: format(",")($guesses[i]?.distance)}
+			: "🔒"}
 		<button
 			{disabled}
 			data-index={i + 1}

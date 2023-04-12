@@ -1,14 +1,16 @@
 <script>
 	import Leaflet from "./Leaflet.svelte";
-	import { clueIndex, guesses } from "$stores/misc.js";
+	import { clueIndex, guesses, gameOver, best } from "$stores/misc.js";
 	export let latitude;
 	export let longitude;
 
 	let placed;
 	let guess;
 
-	$: message = "Place pin on map to guess";
-	$: showMessage = !placed;
+	$: message = $gameOver
+		? `Best guess: ${$best.distance} miles from the location`
+		: "Place pin on map to guess";
+	$: showMessage = $gameOver || !placed;
 	$: showGuessPrompt = placed;
 
 	function clickGuess() {

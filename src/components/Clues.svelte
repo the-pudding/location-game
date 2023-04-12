@@ -27,6 +27,7 @@
 	>
 		<button
 			slot="prev"
+			disabled={currentPageIndex === 0}
 			on:click={showPrevPage}
 			class="custom-arrow custom-arrow-prev"
 		>
