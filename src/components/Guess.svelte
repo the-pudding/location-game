@@ -12,5 +12,6 @@
 
 <style>
 	section {
+		margin-top: 32px;
 	}
 </style>

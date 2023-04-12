@@ -34,5 +34,7 @@
 	article {
 		max-width: 600px;
 		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
 	}
 </style>
