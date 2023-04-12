@@ -55,7 +55,6 @@
 
 <style>
 	section {
-		border-top: 2px solid var(--color-fg);
 		background: var(--color-gray-100);
 		padding: 16px 8px 32px 8px;
 	}

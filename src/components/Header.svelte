@@ -40,6 +40,8 @@
 		align-items: center;
 		justify-content: space-between;
 		font-size: var(--16px);
+		border-bottom: 2px solid var(--color-fg);
+		height: var(--header-height);
 	}
 
 	h1,

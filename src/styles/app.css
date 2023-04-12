@@ -36,6 +36,8 @@
 
 	/* "1" second duration */
 	--1s: 1ms;
+
+	--header-height: 72px;
 }
 
 /* dark theme */
@@ -67,28 +69,9 @@
 	}
 }
 
-h1 {
-	font-size: var(--48px, 48px);
-}
-
-h2 {
-	font-size: var(--36px, 36px);
-}
-
-h3 {
-	font-size: var(--28px, 28px);
-}
-
-h4 {
-	font-size: var(--24px, 24px);
-}
-
-h5 {
-	font-size: var(--22px, 22px);
-}
-
-h6 {
-	font-size: var(--20px, 20px);
+h1, h2, h3, h4, h5, h6 {
+	font-size: inherit;
+	font-weight:800;
 }
 
 .leaflet-bar a {

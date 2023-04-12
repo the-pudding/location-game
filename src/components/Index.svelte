@@ -6,6 +6,8 @@
 	import Clues from "$components/Clues.svelte";
 	import Guess from "$components/Guess.svelte";
 	import Footer from "$components/Footer.svelte";
+	import About from "$components/About.svelte";
+	import Stats from "$components/Stats.svelte";
 
 	const copy = getContext("copy");
 	let data;
@@ -28,6 +30,8 @@
 		<Clues {images} />
 		<Guess {latitude} {longitude} />
 	{/if}
+	<About />
+	<Stats />
 </article>
 
 <style>
@@ -36,5 +40,6 @@
 		margin: 0 auto;
 		display: flex;
 		flex-direction: column;
+		position: relative;
 	}
 </style>
