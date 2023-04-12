@@ -3,6 +3,7 @@
 	import Dots from "$components/Clues.Dots.svelte";
 	import Images from "$components/Clues.Images.svelte";
 	import mq from "$stores/mq.js";
+	import { clueIndex } from "$stores/misc.js";
 
 	export let images;
 
@@ -10,6 +11,8 @@
 
 	$: swiping = !$mq.desktop;
 	$: arrows = $mq.desktop;
+
+	$: carousel?.goTo($clueIndex);
 </script>
 
 <section id="images">
@@ -36,6 +39,7 @@
 
 		<button
 			slot="next"
+			disabled={currentPageIndex + 1 > $clueIndex}
 			on:click={showNextPage}
 			class="custom-arrow custom-arrow-next"
 		>
@@ -50,12 +54,12 @@
 
 <style>
 	section {
-		border-top: 3px solid var(--color-fg);
+		border-top: 2px solid var(--color-fg);
 		background: var(--color-gray-100);
 		padding: 16px 8px 32px 8px;
 	}
 
-	.custom-arrow {
+	button.custom-arrow {
 		width: 32px;
 		margin: 8px 4px;
 		font-size: var(--24px);
@@ -63,6 +67,10 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	button.custom-arrow:hover {
+		background: transparent;
 	}
 
 	.wrapper {

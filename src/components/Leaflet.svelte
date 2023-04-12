@@ -1,11 +1,13 @@
 <!-- LeafletMap.svelte -->
 <script>
 	import { onMount } from "svelte";
+	import { guesses, clueIndex } from "$stores/misc.js";
 	import "leaflet/dist/leaflet.css";
 
 	export let latitude;
 	export let longitude;
 	export let placed;
+	export let guess;
 
 	const MILES_IN_A_METER = 0.000621371;
 	const maxZoom = 14;
@@ -16,8 +18,9 @@
 	let group;
 	let iconGuess;
 	let iconAnswer;
-	let distance;
+	let answerLocation;
 
+	$: if (L && latitude) answerLocation = L.latLng(latitude, longitude);
 	$: gameOver = false;
 
 	function setTileLayer(i) {
@@ -55,24 +58,46 @@
 		// L.marker(guessLocation, { icon: iconGuess }).addTo(group);
 
 		L.marker(answerLocation, { icon: iconAnswer }).addTo(group);
-		const answerLocation = L.latLng(latitude, longitude);
 
-		L.polyline([answerLocation, guessLocation], {
-			color: "black",
-			dashArray: "5, 10"
-		}).addTo(group);
-
-		distance = Math.round(
-			answerLocation.distanceTo(guessLocation) * MILES_IN_A_METER
-		);
+		// L.polyline([answerLocation, guessLocation], {
+		// 	color: "black",
+		// 	dashArray: "5, 10"
+		// }).addTo(group);
 	}
 
 	function handleMapClick(e) {
-		placed = true;
 		group.clearLayers();
+		placed = true;
+		const location = e.latlng;
 
-		const guessLocation = e.latlng;
-		L.marker(guessLocation, { icon: iconGuess }).addTo(group);
+		// previous guesses
+		$guesses.forEach((guess) => {
+			const iconGuess = L.divIcon({
+				className: "icon-guess",
+				html: `<span>${guess.i + 1}</span>`,
+				iconSize: [20, 20]
+			});
+
+			L.marker(guess.location, { icon: iconGuess }).addTo(group);
+		});
+
+		// current guess
+		const iconGuess = L.divIcon({
+			className: "icon-guess",
+			html: `<span>${$clueIndex + 1}</span>`,
+			iconSize: [20, 20]
+		});
+
+		L.marker(location, { icon: iconGuess }).addTo(group);
+
+		const distance = Math.round(
+			answerLocation.distanceTo(location) * MILES_IN_A_METER
+		);
+
+		guess = {
+			distance,
+			location
+		};
 	}
 
 	onMount(async () => {
@@ -84,13 +109,6 @@
 		// 	iconSize: [24, 24],
 		// 	iconAnchor: [-12, 24]
 		// });
-
-		iconGuess = L.divIcon({
-			className: "icon-guess",
-			html: "<span>1</span>",
-			iconSize: [20, 20]
-		});
-
 		iconAnswer = L.divIcon({
 			className: "icon-answer"
 		});
@@ -110,11 +128,15 @@
 <style>
 	div {
 		width: 100%;
-		aspect-ratio: 2;
+		aspect-ratio: 1.5;
+	}
+
+	:global(.icon-guess) {
+		pointer-events: none;
 	}
 
 	:global(.icon-guess span) {
-		background: red;
+		background: white;
 		display: block;
 		width: 100%;
 		height: 100%;
@@ -128,5 +150,11 @@
 		width: 32px;
 		height: 32px;
 		background: green;
+	}
+
+	@media only screen and (min-width: 600px) {
+		div {
+			aspect-ratio: 2;
+		}
 	}
 </style>

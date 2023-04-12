@@ -1,4 +1,7 @@
 <script>
+	import { format } from "d3";
+	import { guesses, clueIndex } from "$stores/misc.js";
+
 	export let images;
 	export let carousel;
 	export let currentPageIndex;
@@ -6,10 +9,18 @@
 
 <div class="dots">
 	{#each images as image, i}
+		{@const disabled = i > $clueIndex}
+		{@const active = i === currentPageIndex}
+		{@const text = active
+			? "🤔"
+			: disabled
+			? "🔒"
+			: format(",")($guesses[i]?.distance)}
 		<button
+			{disabled}
 			data-index={i + 1}
-			class:active={i === currentPageIndex}
-			on:click={() => carousel.goTo(i)}>?</button
+			class:active
+			on:click={() => carousel.goTo(i)}>{text}</button
 		>
 	{/each}
 </div>
@@ -19,12 +30,12 @@
 		width: 100%;
 		display: flex;
 		justify-content: center;
-		padding: 0 24px;
+		padding: 0;
 	}
 
 	button {
 		flex: 1;
-		margin: 0 8px;
+		margin: 0 4px;
 		font-size: var(--12px);
 		position: relative;
 	}
@@ -44,5 +55,11 @@
 
 	button.active {
 		background: gray;
+	}
+
+	@media only screen and (min-width: 400px) {
+		.dots {
+			padding: 0 24px;
+		}
 	}
 </style>
