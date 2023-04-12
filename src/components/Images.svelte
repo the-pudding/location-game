@@ -8,21 +8,20 @@
 	let reveal;
 	let carousel;
 
-	const heights = [];
-
 	$: prefix = reveal ? "hide" : "reveal";
 	$: suffix = reveal ? "" : " (spoilers!)";
+	$: width = 1024;
 </script>
 
 <section id="images">
 	<Carousel bind:this={carousel} infinite={false} let:currentPageIndex>
 		{#key images}
 			{#each images as { title, credit }, i}
-				{@const src = `${baseUrl}/${title}&width=1024`}
+				{@const src = `${baseUrl}/${title}&width=${width}`}
 				<div class="slide">
 					<figure>
 						<div class="figure-img">
-							<img {src} alt={title} bind:naturalHeight={heights[i]} />
+							<img {src} alt={title} />
 						</div>
 						<figcaption>
 							<button on:click={() => (reveal = !reveal)}
