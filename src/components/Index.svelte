@@ -3,7 +3,7 @@
 	import { base } from "$app/paths";
 	import { shuffle } from "d3";
 	import loadJson from "$utils/loadJson.js";
-	import Images from "$components/Images.svelte";
+	import Clues from "$components/Clues.svelte";
 	import Guess from "$components/Guess.svelte";
 	import Footer from "$components/Footer.svelte";
 
@@ -25,7 +25,7 @@
 
 <article>
 	{#if data}
-		<Images {images} />
+		<Clues {images} />
 		<Guess {latitude} {longitude} />
 	{/if}
 </article>

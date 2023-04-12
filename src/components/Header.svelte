@@ -6,6 +6,13 @@
 </script>
 
 <header>
+	<div class="title">
+		<h1>Where in the USA is this?</h1>
+		<p class="brand">
+			A daily game from&nbsp;<a href="https://pudding.cool">The Pudding</a>
+		</p>
+	</div>
+
 	<div class="about">
 		<button
 			aria-label="about"
@@ -21,90 +28,43 @@
 			}}><BarChart2 /></button
 		>
 	</div>
-
-	<h1>{copy.title}</h1>
-
-	<p class="brand">
-		a game from <a
-			class="wordmark"
-			href="https://pudding.cool"
-			aria-label="The Pudding">{@html wordmark}</a
-		>
-	</p>
 </header>
 
 <style>
 	header {
 		position: relative;
-		padding: 16px;
+		padding: 16px 8px;
+		max-width: 600px;
+		margin: 0 auto;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-size: var(--16px);
+	}
+
+	h1,
+	p {
+		font-size: inherit;
+		font-weight: 400;
+		line-height: 1;
+		margin: 0;
 	}
 
 	h1 {
-		font-size: var(--20px);
-		font-weight: 400;
-		text-align: center;
-		line-height: 1;
-		margin: 0;
+		font-weight: 800;
+		text-transform: uppercase;
+		margin-bottom: 4px;
 	}
 
-	p {
-		margin: 0;
-	}
-
-	.about {
-		position: absolute;
-		top: 50%;
-		left: 16px;
-		transform: translate(0, -50%);
-	}
-
-	.about button {
+	button {
 		padding: 0;
 		line-height: 1;
 		border: none;
-		font-size: 24px;
-		color: var(--color-bg-2);
-	}
-
-	.about button:hover {
-		background: transparent;
-		color: var(--color-bg);
+		width: 36px;
+		height: 36px;
 	}
 
 	:global(.about svg) {
 		vertical-align: bottom;
-	}
-
-	.brand {
-		display: flex;
-		align-items: center;
-		justify-content: flex-end;
-		position: absolute;
-		top: 50%;
-		right: 24px;
-		display: none;
-		transform: translate(0, -50%);
-	}
-
-	a.wordmark {
-		border: none;
-		display: inline-block;
-		color: currentColor;
-		width: 6em;
-		transform: translate(6px, 3px);
-	}
-
-	a.wordmark:hover {
-		background-color: transparent;
-	}
-
-	:global(.wordmark svg path) {
-		fill: currentColor;
-	}
-
-	@media (min-width: 720px) {
-		.brand {
-			display: flex;
-		}
 	}
 </style>

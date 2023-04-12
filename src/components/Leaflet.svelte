@@ -5,6 +5,7 @@
 
 	export let latitude;
 	export let longitude;
+	export let placed;
 
 	const MILES_IN_A_METER = 0.000621371;
 	const maxZoom = 14;
@@ -16,6 +17,8 @@
 	let iconGuess;
 	let iconAnswer;
 	let distance;
+
+	$: gameOver = false;
 
 	function setTileLayer(i) {
 		if (i === 0)
@@ -47,23 +50,29 @@
 			).addTo(map);
 	}
 
-	function handleMapClick(e) {
-		group.clearLayers();
-
-		const answerLocation = L.latLng(latitude, longitude);
-		const guessLocation = e.latlng;
+	function showAnswer() {
+		// const guessLocation = e.latlng;
+		// L.marker(guessLocation, { icon: iconGuess }).addTo(group);
 
 		L.marker(answerLocation, { icon: iconAnswer }).addTo(group);
-		L.marker(guessLocation, { icon: iconGuess }).addTo(group);
-
-		distance = Math.round(
-			answerLocation.distanceTo(guessLocation) * MILES_IN_A_METER
-		);
+		const answerLocation = L.latLng(latitude, longitude);
 
 		L.polyline([answerLocation, guessLocation], {
 			color: "black",
 			dashArray: "5, 10"
 		}).addTo(group);
+
+		distance = Math.round(
+			answerLocation.distanceTo(guessLocation) * MILES_IN_A_METER
+		);
+	}
+
+	function handleMapClick(e) {
+		placed = true;
+		group.clearLayers();
+
+		const guessLocation = e.latlng;
+		L.marker(guessLocation, { icon: iconGuess }).addTo(group);
 	}
 
 	onMount(async () => {
@@ -77,7 +86,9 @@
 		// });
 
 		iconGuess = L.divIcon({
-			className: "icon-guess"
+			className: "icon-guess",
+			html: "<span>1</span>",
+			iconSize: [20, 20]
 		});
 
 		iconAnswer = L.divIcon({
@@ -94,7 +105,6 @@
 	});
 </script>
 
-<p>{distance}</p>
 <div bind:this={mapEl} />
 
 <style>
@@ -103,10 +113,15 @@
 		aspect-ratio: 2;
 	}
 
-	:global(.icon-guess) {
-		width: 32px;
-		height: 32px;
+	:global(.icon-guess span) {
 		background: red;
+		display: block;
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		font-weight: 800;
+		text-align: center;
+		border: 1px solid var(--color-fg);
 	}
 
 	:global(.icon-answer) {

@@ -16,7 +16,7 @@
 	--z-overlay: 1000;
 
 	/* presets (used in reset.css) */
-	--border-radius: 2px;
+	--border-radius: 0px;
 	--font-body: var(--sans);
 	--font-form: var(--sans);
 	--color-bg: var(--color-white);
@@ -28,7 +28,7 @@
 	--color-selection: var(--color-gray-300);
 	--color-border: var(--color-gray-300);
 	--color-button-bg: var(--color-gray-300);
-	--color-button-fg: var(--color-gray-900);
+	--color-button-fg: var(--color-gray-700);
 	--color-button-hover: var(--color-gray-400);
 	--color-input-bg: var(--color-gray-50);
 	--color-input-fg: var(--color-gray-900);
@@ -93,4 +93,9 @@ h6 {
 
 .leaflet-bar a {
 	padding: 0;
+}
+
+button {
+	font-weight: 800;
+	text-transform: uppercase;
 }
