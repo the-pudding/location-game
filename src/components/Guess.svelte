@@ -1,5 +1,6 @@
 <script>
-	import Leaflet from "./Leaflet.svelte";
+	import Map from "$components/Guess.Map.svelte";
+	import Items from "$components/Guess.Items.svelte";
 	import { clueIndex, guesses, gameOver, best } from "$stores/misc.js";
 	export let latitude;
 	export let longitude;
@@ -23,7 +24,8 @@
 
 <section id="guess">
 	{#if latitude}
-		<Leaflet {latitude} {longitude} bind:placed bind:guess />
+		<Items />
+		<Map {latitude} {longitude} bind:placed bind:guess />
 	{/if}
 	<div>
 		{#if showMessage}
@@ -36,29 +38,27 @@
 
 <style>
 	section {
-		background: var(--color-gray-900);
-		padding: 8px;
+		padding: 0;
 	}
 
 	div {
+		border-top: 2px solid var(--color-fg);
+		background: var(--color-gray-100);
 		padding: 8px;
-		padding-top: 16px;
 		text-align: center;
+		height: 48px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	p {
 		margin: 0;
 		line-height: 1;
-		color: var(--color-bg);
 		text-align: center;
 	}
 
 	button {
-		background: var(--color-bg);
-		color: var(--color-fg);
-	}
-
-	button:hover {
-		background: var(--color-gray-100);
+		width: 10rem;
 	}
 </style>

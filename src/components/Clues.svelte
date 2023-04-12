@@ -1,6 +1,5 @@
 <script>
 	import Carousel from "svelte-carousel";
-	import Dots from "$components/Clues.Dots.svelte";
 	import Images from "$components/Clues.Images.svelte";
 	import mq from "$stores/mq.js";
 	import { clueIndex } from "$stores/misc.js";
@@ -9,6 +8,8 @@
 
 	let carousel;
 
+	const dots = false;
+
 	$: swiping = !$mq.desktop;
 	$: arrows = $mq.desktop;
 
@@ -16,11 +17,13 @@
 </script>
 
 <section id="images">
+	<p class="counter">image x of 5</p>
 	<Carousel
 		bind:this={carousel}
 		infinite={false}
 		{swiping}
 		{arrows}
+		{dots}
 		let:currentPageIndex
 		let:showPrevPage
 		let:showNextPage
@@ -46,19 +49,24 @@
 		>
 			<span>&rarr;</span>
 		</button>
-
-		<div class="wrapper" slot="dots">
-			<Dots {carousel} {currentPageIndex} {images} />
-		</div>
 	</Carousel>
 </section>
 
 <style>
 	section {
 		background: var(--color-gray-100);
-		padding: 16px 8px 32px 8px;
+		padding: 16px 8px 0 8px;
 	}
 
+	p.counter {
+		margin: 0;
+		margin-bottom: 4px;
+		line-height: 1;
+		text-align: center;
+		font-size: var(--12px);
+		text-transform: uppercase;
+		font-weight: 800;
+	}
 	button.custom-arrow {
 		width: 32px;
 		margin: 8px 4px;
@@ -71,9 +79,5 @@
 
 	button.custom-arrow:hover {
 		background: transparent;
-	}
-
-	.wrapper {
-		width: 100%;
 	}
 </style>
