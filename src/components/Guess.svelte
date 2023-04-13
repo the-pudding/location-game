@@ -22,26 +22,22 @@
 	}
 </script>
 
-<section id="guess">
+<div class="wrapper">
 	{#if latitude}
 		<Items />
 		<Map {latitude} {longitude} bind:placed bind:guess />
 	{/if}
-	<div>
+	<div class="info">
 		{#if showMessage}
 			<p class="message">{message}</p>
 		{:else if showGuessPrompt}
 			<button on:click={clickGuess}>Guess!</button>
 		{/if}
 	</div>
-</section>
+</div>
 
 <style>
-	section {
-		padding: 0;
-	}
-
-	div {
+	.info {
 		border-top: 2px solid var(--color-fg);
 		background: var(--color-gray-100);
 		padding: 8px;

@@ -1,27 +1,33 @@
 <script>
-	import Carousel from "svelte-carousel";
+	import Slider from "$components/helpers/Slider.svelte";
+	import Slide from "$components/helpers/Slider.Slide.svelte";
+
 	import Images from "$components/Clues.Images.svelte";
 	import mq from "$stores/mq.js";
 	import { clueIndex } from "$stores/misc.js";
 
 	export let images;
 
-	let carousel;
-	let pageIndex = 1;
-
-	const dots = false;
-
-	function onPageChange(e) {
-		pageIndex = e.detail + 1;
-	}
-
-	$: swiping = !$mq.desktop;
-	$: arrows = $mq.desktop;
-	$: carousel?.goTo($clueIndex);
+	let sliderEl;
 </script>
 
-<section id="images">
+<div class="wrapper">
 	<div class="info">
+		<p>Five images. Five guesses. One location.</p>
+		<p class="counter">Image {0} of 5</p>
+	</div>
+
+	<Slider bind:this={sliderEl}>
+		{#each images as image, i}
+			<Slide index={i}>
+				<p>{i}</p>
+				<!-- <Images {image} /> -->
+			</Slide>
+		{/each}
+	</Slider>
+</div>
+
+<!-- <div class="info">
 		<p>Five images. Five guesses. One location.</p>
 		<p class="counter">Image {pageIndex} of 5</p>
 	</div>
@@ -57,16 +63,16 @@
 		>
 			<span>&rarr;</span>
 		</button>
-	</Carousel>
-</section>
+	</Carousel> -->
 
 <style>
-	section {
+	.wrapper {
 		background: var(--color-gray-100);
-		padding: 16px 8px 0 8px;
+		width: 100%;
+		height: 100%;
 	}
 
-	.info {
+	/* .info {
 		display: flex;
 		justify-content: space-between;
 	}
@@ -92,5 +98,5 @@
 
 	button.custom-arrow:hover {
 		background: transparent;
-	}
+	} */
 </style>

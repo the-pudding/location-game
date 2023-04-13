@@ -1,7 +1,7 @@
 <script>
 	import viewport from "$stores/viewport.js";
 
-	export let images;
+	export let image;
 
 	const baseUrl =
 		"https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file";
@@ -11,31 +11,31 @@
 	$: width = $viewport.width < 400 ? 512 : 1024;
 	$: prefix = reveal ? "hide" : "show";
 	$: suffix = reveal ? "" : " (spoilers!)";
+	$: src = `${baseUrl}/${title}&width=${width}`;
+	$: title = image.title;
+	$: credit = image.credit;
 </script>
 
-{#each images as { title, credit }, i}
-	{@const src = `${baseUrl}/${title}&width=${width}`}
-	<div class="slide">
-		<figure>
-			<div class="figure-img">
-				<img {src} alt={title} />
-			</div>
-			<figcaption>
-				<button on:click={() => (reveal = !reveal)}
-					>{prefix} attribution{suffix}</button
-				>
-				<span class:reveal>
-					{@html credit}
-				</span>
-			</figcaption>
-		</figure>
-	</div>
-{/each}
+<div class="image">
+	<figure>
+		<div class="figure-img">
+			<img {src} alt={title} />
+		</div>
+		<figcaption>
+			<button on:click={() => (reveal = !reveal)}
+				>{prefix} attribution{suffix}</button
+			>
+			<span class:reveal>
+				{@html credit}
+			</span>
+		</figcaption>
+	</figure>
+</div>
 
 <style>
-	.slide {
+	/* .slide {
 		aspect-ratio: 1;
-	}
+	} */
 
 	figure {
 		display: flex;
@@ -77,9 +77,9 @@
 		visibility: visible;
 	}
 
-	@media only screen and (min-width: 600px) {
+	/* @media only screen and (min-width: 600px) {
 		.slide {
 			aspect-ratio: 1.5;
 		}
-	}
+	} */
 </style>

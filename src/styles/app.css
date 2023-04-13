@@ -4,6 +4,8 @@
 
 /* colors defined in variables.css */
 :root {
+	--doc-height: 100%;
+	
 	/* font */
 	--sans:  system-ui, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
 	--serif: Iowan Old Style, Times New Roman, Times, serif;
@@ -67,6 +69,30 @@
 	:root {
 		--1s: 1s;
 	}
+}
+
+/* html,
+body {
+ padding: 0;
+ margin: 0;
+ height: 100vh;
+ height: var(--doc-height);
+}
+
+
+
+body > div {
+	height: 100%;
+} */
+
+html, body, body > div {
+	height: 100%;
+	overflow: hidden;
+}
+
+main {
+	height: calc(100% - var(--header-height));
+	overflow: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {

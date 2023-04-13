@@ -22,48 +22,72 @@
 	$: images = data?.images;
 	$: game = data?.game;
 
+	const onResize = () => {
+		const prop = "--doc-height";
+		const val = `${window.innerHeight}px`;
+		document.documentElement.style.setProperty(prop, val);
+	};
+
 	onMount(async () => {
+		window.addEventListener("resize", onResize);
+		onResize();
+
 		const timestamp = Date.now();
 		const url = `https://pudding.cool/games/location-data/game.json?version=${timestamp}`;
 		data = await loadJson(url);
-		console.log(data);
 	});
 </script>
 
 <article>
-	<!-- <ul>
-		{#each c1 as background}
-			<li style:background />
-		{/each}
-	</ul>
-	<ul>
-		{#each c2 as background}
-			<li style:background />
-		{/each}
-	</ul> -->
 	{#if data}
-		<Clues {images} />
-		<Guess {latitude} {longitude} />
+		<section id="clues">
+			<Clues {images} />
+		</section>
+		<section id="guess">
+			<!-- <Guess {latitude} {longitude} /> -->
+		</section>
 	{/if}
 	<About />
 	<Stats {game} />
 </article>
 
 <style>
-	ul {
-		display: flex;
-		list-style: none;
-		margin-bottom: 2rem;
-	}
-	li {
-		width: 4rem;
-		height: 4rem;
-	}
 	article {
 		max-width: 600px;
 		margin: 0 auto;
 		display: flex;
 		flex-direction: column;
 		position: relative;
+		height: 100%;
+	}
+
+	section {
+		flex: 1;
+	}
+
+	#clues {
+		/*  */
+	}
+
+	#guess {
+		/*  */
+	}
+
+	@media only screen and (min-width: 960px) {
+		article {
+			/* flex-direction: row; */
+		}
+
+		section {
+			/* max-height: 600px; */
+		}
+
+		#clues {
+			/*  */
+		}
+
+		#guess {
+			/*  */
+		}
 	}
 </style>

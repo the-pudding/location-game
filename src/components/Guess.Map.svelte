@@ -141,7 +141,9 @@
 <style>
 	div {
 		width: 100%;
-		aspect-ratio: 1.5;
+		height: 100%;
+		min-height: 240px;
+		/* aspect-ratio: 1.5; */
 	}
 
 	:global(.icon-guess) {
@@ -176,9 +178,9 @@
 		stroke: var(--color-bg);
 	}
 
-	@media only screen and (min-width: 600px) {
+	/* @media only screen and (min-width: 600px) {
 		div {
 			aspect-ratio: 2;
 		}
-	}
+	} */
 </style>

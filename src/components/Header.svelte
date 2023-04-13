@@ -34,7 +34,7 @@
 	header {
 		position: relative;
 		padding: 16px 8px;
-		max-width: 600px;
+		max-width: 1200px;
 		margin: 0 auto;
 		display: flex;
 		align-items: center;
