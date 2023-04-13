@@ -20,6 +20,7 @@
 		z-index: var(--z-overlay);
 		width: 100%;
 		height: calc(100vh - var(--header-height));
+		padding: 0 8px;
 	}
 
 	.visible {

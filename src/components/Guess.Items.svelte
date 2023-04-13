@@ -31,7 +31,6 @@
 		padding: 0;
 		border-top: 2px solid var(--color-fg);
 		border-bottom: 2px solid var(--color-fg);
-		margin: 24px 0 0px 0;
 	}
 
 	.item {
@@ -57,11 +56,10 @@
 		content: attr(data-index);
 		display: block;
 		position: absolute;
-		top: -4px;
-		left: 0;
+		top: 2px;
+		right: 4px;
 		width: 100%;
-		text-align: center;
-		transform: translate(0, -100%);
+		text-align: right;
 		line-height: 1;
 		pointer-events: none;
 		color: var(--color-gray-600);

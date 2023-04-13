@@ -44,7 +44,7 @@
 			<Clues {images} />
 		</section>
 		<section id="guess">
-			<!-- <Guess {latitude} {longitude} /> -->
+			<Guess {latitude} {longitude} />
 		</section>
 	{/if}
 	<About />
@@ -53,8 +53,10 @@
 
 <style>
 	article {
+		--map-height: 280px;
 		max-width: 600px;
 		margin: 0 auto;
+		padding: 0 8px;
 		display: flex;
 		flex-direction: column;
 		position: relative;
@@ -66,28 +68,24 @@
 	}
 
 	#clues {
-		/*  */
+		z-index: var(--z-middle);
 	}
 
 	#guess {
-		/*  */
+		z-index: var(--z-top);
+		height: var(--peak-height);
+		flex: 0;
 	}
 
-	@media only screen and (min-width: 960px) {
-		article {
-			/* flex-direction: row; */
-		}
-
-		section {
-			/* max-height: 600px; */
-		}
-
-		#clues {
-			/*  */
-		}
-
+	@media only screen and (min-height: 860px) {
 		#guess {
-			/*  */
+			height: auto;
+		}
+	}
+
+	@media only screen and (min-height: 1080px) {
+		#guess {
+			--map-height: 320px;
 		}
 	}
 </style>

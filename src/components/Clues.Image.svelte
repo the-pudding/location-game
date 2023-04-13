@@ -1,6 +1,7 @@
 <script>
 	import viewport from "$stores/viewport.js";
 
+	export let index;
 	export let image;
 
 	const baseUrl =
@@ -16,27 +17,23 @@
 	$: credit = image.credit;
 </script>
 
-<div class="image">
-	<figure>
-		<div class="figure-img">
-			<img {src} alt={title} />
-		</div>
-		<figcaption>
-			<button on:click={() => (reveal = !reveal)}
-				>{prefix} attribution{suffix}</button
-			>
-			<span class:reveal>
-				{@html credit}
-			</span>
-		</figcaption>
-	</figure>
-</div>
+<figure>
+	<div
+		role="img"
+		style="background-image: url('{src}');"
+		aria-label="mystery photo {index} of 5"
+	/>
+	<figcaption>
+		<button on:click={() => (reveal = !reveal)}
+			>{prefix} attribution{suffix}</button
+		>
+		<span class:reveal>
+			{@html credit}
+		</span>
+	</figcaption>
+</figure>
 
 <style>
-	/* .slide {
-		aspect-ratio: 1;
-	} */
-
 	figure {
 		display: flex;
 		flex-direction: column;
@@ -44,16 +41,24 @@
 		height: 100%;
 	}
 
-	.figure-img {
-		/* flex-grow: 1; */
+	/* .figure-img {
 		overflow: hidden;
-	}
+	} */
 
-	img {
+	/* img {
+		aspect-ratio: 2;
 		object-fit: contain;
 		width: 100%;
 		height: 100%;
-		/* border: 1px solid black; */
+		border: 1px solid black;
+	} */
+
+	[role="img"] {
+		width: 100%;
+		height: 100%;
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
 	}
 
 	figcaption {

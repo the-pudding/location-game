@@ -141,9 +141,7 @@
 <style>
 	div {
 		width: 100%;
-		height: 100%;
-		min-height: 240px;
-		/* aspect-ratio: 1.5; */
+		height: var(--map-height);
 	}
 
 	:global(.icon-guess) {
