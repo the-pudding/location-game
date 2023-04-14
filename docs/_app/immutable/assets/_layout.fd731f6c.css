@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Tue, 31 May 2022 13:42:06 GMT
+ * Generated on Fri, 14 Apr 2023 13:49:33 GMT
  */
 
 :root {
@@ -48,6 +48,9 @@
   --96px: 6rem;
   --112px: 7rem;
   --128px: 8rem;
+  --sequential-0: #ae017e;
+  --sequential-1: #f768a1;
+  --sequential-2: #fbb4b9;
 }
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
@@ -730,8 +733,6 @@ ol, ul {
 /* colors defined in variables.css */
 
 :root {
-	--doc-height: 100%;
-	
 	/* font */
 	--sans:  system-ui, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
 	--serif: Iowan Old Style, Times New Roman, Times, serif;
@@ -765,7 +766,8 @@ ol, ul {
 	/* "1" second duration */
 	--1s: 1ms;
 
-	--header-height: 54px;
+	--doc-height: 100%;
+	--header-height: 56px;
 	--peak-height: 84px;
 }
 
@@ -847,4 +849,42 @@ button {
 button:hover {
 	/* transform: translate(1px, 1px); */
 	/* box-shadow: 2px 2px 0px 0px var(--color-gray-700); */
-}header.svelte-67k1gd{position:relative;max-width:600px;margin:0 auto;font-size:var(--16px);height:var(--header-height);padding:0 8px}.wrapper.svelte-67k1gd{display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:justify;justify-content:space-between;padding:8px 0;border-bottom:3px solid var(--color-fg);width:100%}h1.svelte-67k1gd,p.svelte-67k1gd{font-size:inherit;font-weight:400;line-height:1;margin:0}h1.svelte-67k1gd{font-weight:800;text-transform:uppercase;margin-bottom:4px}button.svelte-67k1gd{padding:0;line-height:1;border:none;width:36px;height:36px}.about svg{vertical-align:bottom}
+}
+
+.threshold- {
+	background: var(--color-gray-300) !important;
+}
+
+.threshold-0 {
+	background: var(--sequential-0) !important;;
+	color: var(--color-bg);
+}
+
+.threshold-1 {
+	background: var(--sequential-1) !important;;
+}
+
+.threshold-2 {
+	background: var(--sequential-2) !important;;
+}
+
+.leaflet-container a {
+	color: var(--color-fg) !important;
+	text-decoration: underline !important;
+}
+
+.leaflet-control-zoom a {
+	color: var(--color-bg) !important;
+	background: var(--color-fg) !important;
+	text-decoration: none !important;
+	border-radius: var(--border-radius) !important;
+	margin-top: 2px;
+}
+
+.leaflet-control-zoom a:hover {
+	background: var(--color-gray-700) !important;
+}
+
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+	border: none !important;
+}header.svelte-ln59v7{position:relative;max-width:600px;margin:0 auto;font-size:var(--18px);height:var(--header-height);padding:0 8px}.wrapper.svelte-ln59v7{display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:justify;justify-content:space-between;padding:8px 0;border-bottom:3px solid var(--color-fg);width:100%}h1.svelte-ln59v7,p.svelte-ln59v7{font-size:inherit;font-weight:400;line-height:1;margin:0}h1.svelte-ln59v7{font-weight:800;text-transform:uppercase;margin-bottom:4px}button.svelte-ln59v7{padding:0;line-height:1;border:none;width:36px;height:36px}.about svg{vertical-align:bottom}
