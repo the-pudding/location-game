@@ -752,7 +752,7 @@ ol, ul {
 	--color-fg: var(--color-gray-900);
 	--color-primary: var(--color-black);
 	--color-link: var(--color-black);
-	--color-focus: var(--color-red);
+	--color-focus: var(--sequential-1);
 	--color-mark: var(--color-yellow);
 	--color-selection: var(--color-gray-300);
 	--color-border: var(--color-gray-300);
@@ -871,6 +871,12 @@ button:hover {
 .leaflet-container a {
 	color: var(--color-fg) !important;
 	text-decoration: underline !important;
+}
+
+.leaflet-container a:focus {
+	outline: 2px solid var(--color-focus) !important;
+	outline-offset: 2px !important;
+	border: none !important;
 }
 
 .leaflet-control-zoom a {
