@@ -20,10 +20,10 @@
 		detail === "right" ? sliderEl.next() : sliderEl.prev();
 	};
 
+	$: sliderEl?.jump($clueIndex);
 	$: left = current === 0 ? "left" : null;
 	$: right = current >= $clueIndex ? "right" : null;
-	// $: disable = [left, right].filter((d) => d);
-	$: disable = [];
+	$: disable = [left, right].filter((d) => d);
 </script>
 
 <div class="wrapper">
@@ -73,7 +73,7 @@
 		margin: 0;
 		line-height: 1;
 		text-align: center;
-		font-size: var(--12px);
+		font-size: var(--14px);
 	}
 
 	.images {

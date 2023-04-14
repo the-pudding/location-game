@@ -89,10 +89,11 @@
 		box-shadow: none;
 		pointer-events: auto;
 		display: flex;
+		padding: 0;
 	}
 
 	button:disabled {
-		opacity: 0.2;
+		opacity: 0;
 		cursor: not-allowed;
 	}
 

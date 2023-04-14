@@ -23,26 +23,25 @@
 
 	$: if (L && latitude) answerLocation = L.latLng(latitude, longitude);
 	$: if ($gameOver) showAnswer();
+	$: render($guesses.length);
+
+	function render() {
+		// previous guesses
+		$guesses.forEach((guess) => {
+			const iconGuess = L.divIcon({
+				className: "icon-guess",
+				html: `<span class="threshold-${guess.threshold}">${
+					guess.i + 1
+				}</span>`,
+				iconSize
+			});
+
+			L.marker(guess.location, { icon: iconGuess }).addTo(group);
+		});
+	}
 
 	function setTileLayer(i) {
 		if (i === 0)
-			L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-				attribution:
-					'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-				maxZoom
-			}).addTo(map);
-		else if (i === 1)
-			L.tileLayer(
-				"https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}",
-				{
-					attribution:
-						'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-					subdomains: "abcd",
-					maxZoom,
-					ext: "png"
-				}
-			).addTo(map);
-		else if (i === 2)
 			L.tileLayer(
 				"https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
 				{
@@ -52,6 +51,12 @@
 					maxZoom
 				}
 			).addTo(map);
+		else
+			L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+				attribution:
+					'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+				maxZoom
+			}).addTo(map);
 	}
 
 	function showAnswer() {
@@ -59,7 +64,7 @@
 
 		const iconGuess = L.divIcon({
 			className: "icon-guess",
-			html: `<span></span>`,
+			html: `<span class="threshold-${$best.seq}"></span>`,
 			iconSize
 		});
 
@@ -80,29 +85,19 @@
 		placed = true;
 		const location = e.latlng;
 
-		// previous guesses
-		$guesses.forEach((guess) => {
-			const iconGuess = L.divIcon({
-				className: "icon-guess",
-				html: `<span>${guess.i + 1}</span>`,
-				iconSize
-			});
+		const distance = Math.round(
+			answerLocation.distanceTo(location) * MILES_IN_A_METER
+		);
 
-			L.marker(guess.location, { icon: iconGuess }).addTo(group);
-		});
+		render();
 
-		// current guess
 		const iconGuess = L.divIcon({
 			className: "icon-guess",
-			html: `<span>${$clueIndex + 1}</span>`,
+			html: `<span class="threshold-">${$clueIndex + 1}</span>`,
 			iconSize
 		});
 
 		L.marker(location, { icon: iconGuess }).addTo(group);
-
-		const distance = Math.round(
-			answerLocation.distanceTo(location) * MILES_IN_A_METER
-		);
 
 		guess = {
 			distance,
@@ -113,12 +108,6 @@
 	onMount(async () => {
 		L = await import("leaflet");
 
-		// Create custom marker icons
-		// iconGuess = L.icon({
-		// 	iconUrl: "assets/icons/user.svg",
-		// 	iconSize
-		// 	iconAnchor: [-12, 24]
-		// });
 		iconAnswer = L.divIcon({
 			className: "icon-answer",
 			iconSize: [32, 32],
@@ -149,7 +138,7 @@
 	}
 
 	:global(.icon-guess span) {
-		background: var(--color-bg);
+		background: var(--color-gray-300);
 		display: block;
 		width: 100%;
 		height: 100%;
@@ -175,7 +164,6 @@
 	:global(.icon-answer svg path, .icon-answer svg line) {
 		stroke: var(--color-bg);
 	}
-
 	/* @media only screen and (min-width: 600px) {
 		div {
 			aspect-ratio: 2;

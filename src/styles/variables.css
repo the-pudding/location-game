@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Tue, 31 May 2022 13:42:06 GMT
+ * Generated on Fri, 14 Apr 2023 13:49:33 GMT
  */
 
 :root {
@@ -48,4 +48,7 @@
   --96px: 6rem;
   --112px: 7rem;
   --128px: 8rem;
+  --sequential-0: #ae017e;
+  --sequential-1: #f768a1;
+  --sequential-2: #fbb4b9;
 }

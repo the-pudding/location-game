@@ -37,7 +37,7 @@
 		position: relative;
 		max-width: 600px;
 		margin: 0 auto;
-		font-size: var(--16px);
+		font-size: var(--18px);
 		height: var(--header-height);
 		padding: 0 8px;
 	}
