@@ -16,12 +16,14 @@
 	let guess;
 	let reveal;
 	let delay;
+	let firstClick;
 
 	$: message = $gameOver
 		? `Best guess: ${$best.distance} miles from the location`
 		: "Place pin on map to guess";
 	$: showMessage = $gameOver || !placed;
 	$: showGuessPrompt = placed;
+	$: isFancy = !firstClick ? "btn-fancy" : "";
 
 	function clickGuess() {
 		if (delay) return;
@@ -40,6 +42,7 @@
 	}
 
 	function clickToggle() {
+		if (!firstClick) firstClick = true;
 		reveal = !reveal;
 	}
 </script>
@@ -48,11 +51,12 @@
 	<div class="peak">
 		<Items />
 		<div class="toggle">
-			<button class="btn-toggle" on:click={clickToggle}>
+			<button class="btn-toggle {isFancy}" on:click={clickToggle}>
 				{#if reveal}
 					<ChevronsDown /> Hide map <ChevronsDown />
 				{:else}
-					<ChevronsUp /> Show map to guess <ChevronsUp />
+					<span><ChevronsUp /></span> Show map to guess
+					<span><ChevronsUp /></span>
 				{/if}
 			</button>
 		</div>
@@ -66,7 +70,7 @@
 		{#if showMessage}
 			<p class="message">{message}</p>
 		{:else if showGuessPrompt}
-			<button class="btn-guess" on:click={clickGuess}>Guess!</button>
+			<button class="btn-guess btn-fancy" on:click={clickGuess}>Guess!</button>
 		{/if}
 	</div>
 </div>
@@ -114,29 +118,22 @@
 	.btn-guess {
 		width: 15rem;
 		font-size: var(--24px);
-		background-size: auto 200%;
-		background-image: linear-gradient(
-			to bottom,
-			var(--sequential-0) 0%,
-			var(--sequential-1) 50%,
-			var(--sequential-2) 100%
-		);
-		transition: background-position 0.25s ease-in-out;
-	}
-
-	.btn-guess:hover {
-		background-position: center 90%;
 	}
 
 	.toggle {
 		background: var(--color-bg);
-		padding: 4px 0;
+		padding: 8px 0;
 	}
 	.btn-toggle {
 		width: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	.btn-fancy span {
+		display: inline-block;
+		animation: bounce 1s ease-in-out infinite;
 	}
 
 	p.message {
@@ -146,6 +143,18 @@
 	@media only screen and (min-height: 860px) {
 		.btn-toggle {
 			display: none;
+		}
+	}
+
+	@keyframes bounce {
+		0% {
+			transform: translateY(0);
+		}
+		25% {
+			transform: translateY(-4px);
+		}
+		100% {
+			transform: translateY(0);
 		}
 	}
 </style>

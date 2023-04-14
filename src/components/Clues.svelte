@@ -66,7 +66,6 @@
 		flex-direction: row;
 		justify-content: space-between;
 		padding: 8px 0;
-		border-bottom: 1px dashed var(--color-fg);
 	}
 
 	.info p {

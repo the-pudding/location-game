@@ -59,8 +59,12 @@
 		z-index: var(--z-middle);
 	}
 
+	.item:first-of-type {
+		transform-origin: 0 center;
+	}
+
 	.item:last-of-type {
-		border-right: none;
+		transform-origin: 100% center;
 	}
 
 	.item:before {
@@ -87,7 +91,7 @@
 			transform: scale(1);
 		}
 		50% {
-			transform: scale(1.2);
+			transform: scale(1.33);
 		}
 		100% {
 			transform: scale(1);

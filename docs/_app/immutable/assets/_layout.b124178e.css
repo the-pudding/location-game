@@ -842,13 +842,6 @@ a {
 button {
 	font-weight: 800;
 	text-transform: uppercase;
-	/* box-shadow: 3px 3px 0px 0px var(--color-gray-500); */
-	/* border: 1px solid var(--color-bg); */
-}
-
-button:hover {
-	/* transform: translate(1px, 1px); */
-	/* box-shadow: 2px 2px 0px 0px var(--color-gray-700); */
 }
 
 .threshold- {
@@ -873,7 +866,7 @@ button:hover {
 	text-decoration: underline !important;
 }
 
-.leaflet-container a:focus {
+.leaflet-container:focus, .leaflet-container a:focus	 {
 	outline: 2px solid var(--color-focus) !important;
 	outline-offset: 2px !important;
 	border: none !important;
@@ -893,4 +886,21 @@ button:hover {
 
 .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
 	border: none !important;
+}
+
+button.btn-fancy {
+	background-size: auto 200%;
+		background-image: linear-gradient(
+			to bottom,
+			var(--sequential-0) 0%,
+			var(--sequential-1) 50%,
+			var(--sequential-2) 100%
+		);
+		transition: background-position 0.25s ease-in-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	button.btn-fancy:hover {
+		background-position: center 90%;
+	}
 }header.svelte-ln59v7{position:relative;max-width:600px;margin:0 auto;font-size:var(--18px);height:var(--header-height);padding:0 8px}.wrapper.svelte-ln59v7{display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:justify;justify-content:space-between;padding:8px 0;border-bottom:3px solid var(--color-fg);width:100%}h1.svelte-ln59v7,p.svelte-ln59v7{font-size:inherit;font-weight:400;line-height:1;margin:0}h1.svelte-ln59v7{font-weight:800;text-transform:uppercase;margin-bottom:4px}button.svelte-ln59v7{padding:0;line-height:1;border:none;width:36px;height:36px}.about svg{vertical-align:bottom}
