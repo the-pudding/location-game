@@ -41,22 +41,10 @@
 		height: 100%;
 	}
 
-	/* .figure-img {
-		overflow: hidden;
-	} */
-
-	/* img {
-		aspect-ratio: 2;
-		object-fit: contain;
-		width: 100%;
-		height: 100%;
-		border: 1px solid black;
-	} */
-
 	[role="img"] {
 		width: 100%;
 		height: 100%;
-		background-size: contain;
+		background-size: cover;
 		background-repeat: no-repeat;
 		background-position: center;
 	}

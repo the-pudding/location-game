@@ -30,14 +30,16 @@
 
 <div class="wrapper" class:reveal>
 	<div class="peak">
-		<button class="toggle" on:click={clickToggle}>
-			{#if reveal}
-				<ChevronsDown /> Hide map <ChevronsDown />
-			{:else}
-				<ChevronsUp /> Show map to guess <ChevronsUp />
-			{/if}
-		</button>
 		<Items />
+		<div class="toggle">
+			<button class="btn-toggle" on:click={clickToggle}>
+				{#if reveal}
+					<ChevronsDown /> Hide map <ChevronsDown />
+				{:else}
+					<ChevronsUp /> Show map to guess <ChevronsUp />
+				{/if}
+			</button>
+		</div>
 	</div>
 	{#if latitude}
 		<div class="map">
@@ -48,7 +50,7 @@
 		{#if showMessage}
 			<p class="message">{message}</p>
 		{:else if showGuessPrompt}
-			<button class="guess" on:click={clickGuess}>Guess!</button>
+			<button class="btn-guess" on:click={clickGuess}>Guess!</button>
 		{/if}
 	</div>
 </div>
@@ -69,12 +71,16 @@
 		transform: translate3d(0, calc(-100% + var(--peak-height)), 0);
 	}
 
+	.peak {
+		border-top: 4px solid var(--color-bg);
+	}
+
 	.map {
 		height: var(--min-map-height);
 	}
 
 	.info {
-		border-top: 2px solid var(--color-fg);
+		/* border-top: 1px dashed var(--color-fg); */
 		padding: 8px;
 		text-align: center;
 		height: var(--info-height);
@@ -89,12 +95,16 @@
 		text-align: center;
 	}
 
-	button.guess {
+	.btn-guess {
 		width: 15rem;
 		font-size: var(--24px);
 	}
 
-	button.toggle {
+	.toggle {
+		background: var(--color-bg);
+		padding: 4px 0;
+	}
+	.btn-toggle {
 		width: 100%;
 		display: flex;
 		align-items: center;
@@ -102,7 +112,7 @@
 	}
 
 	@media only screen and (min-height: 860px) {
-		button.toggle {
+		.btn-toggle {
 			display: none;
 		}
 	}

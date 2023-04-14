@@ -13,14 +13,15 @@
 	const copy = getContext("copy");
 
 	let sliderEl;
-	let slideIndex = 0;
+	let current = 0;
+	let count;
 
 	const onTap = ({ detail }) => {
 		detail === "right" ? sliderEl.next() : sliderEl.prev();
 	};
 
-	$: left = slideIndex === 0 ? "left" : null;
-	$: right = slideIndex >= $clueIndex ? "right" : null;
+	$: left = current === 0 ? "left" : null;
+	$: right = current >= $clueIndex ? "right" : null;
 	// $: disable = [left, right].filter((d) => d);
 	$: disable = [];
 </script>
@@ -28,11 +29,11 @@
 <div class="wrapper">
 	<div class="info">
 		<p class="tagline">{copy.tagline}</p>
-		<p class="counter">Photo {slideIndex + 1} of 5</p>
+		<p class="counter">{current + 1} of {count}</p>
 	</div>
 
 	<div class="images">
-		<Slider bind:this={sliderEl}>
+		<Slider bind:this={sliderEl} bind:current bind:count>
 			{#each images as image, index}
 				<Slide {index}>
 					<Image {image} {index} />
@@ -62,26 +63,17 @@
 
 	.info {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		justify-content: space-between;
+		padding: 8px 0;
+		border-bottom: 1px dashed var(--color-fg);
 	}
 
 	.info p {
 		margin: 0;
-		padding-top: 4px;
 		line-height: 1;
 		text-align: center;
 		font-size: var(--12px);
-		text-transform: uppercase;
-		font-weight: 800;
-	}
-
-	p.tagline {
-		color: var(--color-gray-600);
-	}
-
-	p.counter {
-		padding-bottom: 4px;
 	}
 
 	.images {

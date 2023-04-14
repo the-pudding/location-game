@@ -18,7 +18,7 @@
 	--z-overlay: 1000;
 
 	/* presets (used in reset.css) */
-	--border-radius: 0px;
+	--border-radius: 6px;
 	--font-body: var(--sans);
 	--font-form: var(--sans);
 	--color-bg: var(--color-white);
@@ -99,6 +99,11 @@ main {
 h1, h2, h3, h4, h5, h6 {
 	font-size: inherit;
 	font-weight:800;
+}
+
+a {
+	text-decoration: underline;
+	border: none;
 }
 
 .leaflet-bar a {

@@ -46,7 +46,7 @@
 		align-items: center;
 		justify-content: space-between;
 		padding: 8px 0;
-		border-bottom: 2px solid var(--color-fg);
+		border-bottom: 3px solid var(--color-fg);
 		width: 100%;
 	}
 
