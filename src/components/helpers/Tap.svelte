@@ -11,6 +11,7 @@
 	export let size = "64px";
 	export let arrowSize = "48px";
 	export let arrowStroke = "#000";
+	export let arrowStrokeOutline = "#fff";
 	export let arrowStrokeWidth = "2";
 	export let arrowPosition = "center"; // start, center, end
 
@@ -36,9 +37,7 @@
 	);
 </script>
 
-<svelte:window on:keydown={onKeyDown} bind:innerHeight />
-
-<section class:debug style="height: {innerHeight}px;">
+<section class:debug class="tap">
 	{#each directions as dir}
 		<button
 			on:click={dispatch("tap", dir)}
@@ -49,10 +48,18 @@
 			disabled={disable.includes(dir)}
 		>
 			{#if visibleArrows.includes(dir)}
-				<span style="font-size: {arrowSize};">
+				<span style="--arrow-size:{arrowSize};">
 					{#if dir === "left"}
+						<ChevronLeft
+							color={arrowStrokeOutline}
+							strokeWidth={arrowStrokeWidth * 2}
+						/>
 						<ChevronLeft color={arrowStroke} strokeWidth={arrowStrokeWidth} />
 					{:else if dir === "right"}
+						<ChevronRight
+							color={arrowStrokeOutline}
+							strokeWidth={arrowStrokeWidth * 2}
+						/>
 						<ChevronRight color={arrowStroke} strokeWidth={arrowStrokeWidth} />
 					{/if}
 				</span>
@@ -63,7 +70,7 @@
 
 <style>
 	section {
-		position: fixed;
+		position: absolute;
 		top: 0;
 		left: 0;
 		width: 100%;
@@ -90,7 +97,7 @@
 	}
 
 	button:hover {
-		background-color: rgba(255, 255, 255, 0.2);
+		/* background-color: rgba(255, 255, 255, 0.2); */
 	}
 
 	.left {
@@ -179,8 +186,11 @@
 
 	span {
 		display: inline-block;
+		width: 100%;
 		line-height: 1;
-		opacity: 0.5;
+		opacity: 1;
+		position: relative;
+		transform: translate(0, -32px);
 	}
 
 	.debug .left {
@@ -201,5 +211,21 @@
 	.debug .down {
 		background: orange;
 		opacity: 0.5;
+	}
+
+	:global(.tap span svg) {
+		display: block;
+		position: absolute;
+		top: 0;
+		width: var(--arrow-size);
+		height: var(--arrow-size);
+	}
+
+	:global(.tap .left span svg) {
+		left: 0;
+	}
+
+	:global(.tap .right span svg) {
+		right: 0;
 	}
 </style>

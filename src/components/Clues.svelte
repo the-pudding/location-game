@@ -1,96 +1,82 @@
 <script>
-	import Carousel from "svelte-carousel";
-	import Images from "$components/Clues.Images.svelte";
+	import { getContext } from "svelte";
+	import Slider from "$components/helpers/Slider.svelte";
+	import Slide from "$components/helpers/Slider.Slide.svelte";
+	import Tap from "$components/helpers/Tap.svelte";
+
+	import Image from "$components/Clues.Image.svelte";
 	import mq from "$stores/mq.js";
 	import { clueIndex } from "$stores/misc.js";
 
 	export let images;
 
-	let carousel;
-	let pageIndex = 1;
+	const copy = getContext("copy");
 
-	const dots = false;
+	let sliderEl;
+	let current = 0;
+	let count;
 
-	function onPageChange(e) {
-		pageIndex = e.detail + 1;
-	}
+	const onTap = ({ detail }) => {
+		detail === "right" ? sliderEl.next() : sliderEl.prev();
+	};
 
-	$: swiping = !$mq.desktop;
-	$: arrows = $mq.desktop;
-	$: carousel?.goTo($clueIndex);
+	$: left = current === 0 ? "left" : null;
+	$: right = current >= $clueIndex ? "right" : null;
+	// $: disable = [left, right].filter((d) => d);
+	$: disable = [];
 </script>
 
-<section id="images">
+<div class="wrapper">
 	<div class="info">
-		<p>Five images. Five guesses. One location.</p>
-		<p class="counter">Image {pageIndex} of 5</p>
+		<p class="tagline">{copy.tagline}</p>
+		<p class="counter">{current + 1} of {count}</p>
 	</div>
-	<Carousel
-		bind:this={carousel}
-		infinite={false}
-		{swiping}
-		{arrows}
-		{dots}
-		let:currentPageIndex
-		let:showPrevPage
-		let:showNextPage
-		on:pageChange{onPageChange}
-	>
-		<button
-			slot="prev"
-			disabled={currentPageIndex === 0}
-			on:click={showPrevPage}
-			class="custom-arrow custom-arrow-prev"
-		>
-			<span>&larr;</span>
-		</button>
 
-		{#key images}
-			<Images {carousel} {images} />
-		{/key}
+	<div class="images">
+		<Slider bind:this={sliderEl} bind:current bind:count>
+			{#each images as image, index}
+				<Slide {index}>
+					<Image {image} {index} />
+				</Slide>
+			{/each}
+		</Slider>
+	</div>
 
-		<button
-			slot="next"
-			disabled={currentPageIndex + 1 > $clueIndex}
-			on:click={showNextPage}
-			class="custom-arrow custom-arrow-next"
-		>
-			<span>&rarr;</span>
-		</button>
-	</Carousel>
-</section>
+	<Tap
+		on:tap={onTap}
+		full={true}
+		showArrows={true}
+		size={"96px"}
+		{disable}
+		arrowStroke={"#262626"}
+	/>
+</div>
 
 <style>
-	section {
-		background: var(--color-gray-100);
-		padding: 16px 8px 0 8px;
+	.wrapper {
+		width: 100%;
+		height: 100%;
+		position: relative;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.info {
 		display: flex;
+		flex-direction: row;
 		justify-content: space-between;
+		padding: 8px 0;
+		border-bottom: 1px dashed var(--color-fg);
 	}
 
 	.info p {
 		margin: 0;
-		margin-bottom: 4px;
 		line-height: 1;
 		text-align: center;
 		font-size: var(--12px);
-		text-transform: uppercase;
-		font-weight: 800;
-	}
-	button.custom-arrow {
-		width: 32px;
-		margin: 8px 4px;
-		font-size: var(--24px);
-		background: transparent;
-		display: flex;
-		align-items: center;
-		justify-content: center;
 	}
 
-	button.custom-arrow:hover {
-		background: transparent;
+	.images {
+		flex: 1;
 	}
 </style>

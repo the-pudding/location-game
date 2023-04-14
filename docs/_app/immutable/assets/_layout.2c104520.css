@@ -730,6 +730,8 @@ ol, ul {
 /* colors defined in variables.css */
 
 :root {
+	--doc-height: 100%;
+	
 	/* font */
 	--sans:  system-ui, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
 	--serif: Iowan Old Style, Times New Roman, Times, serif;
@@ -742,7 +744,7 @@ ol, ul {
 	--z-overlay: 1000;
 
 	/* presets (used in reset.css) */
-	--border-radius: 4px;
+	--border-radius: 6px;
 	--font-body: var(--sans);
 	--font-form: var(--sans);
 	--color-bg: var(--color-white);
@@ -753,9 +755,9 @@ ol, ul {
 	--color-mark: var(--color-yellow);
 	--color-selection: var(--color-gray-300);
 	--color-border: var(--color-gray-300);
-	--color-button-bg: var(--color-gray-300);
-	--color-button-fg: var(--color-gray-700);
-	--color-button-hover: var(--color-gray-400);
+	--color-button-bg: var(--color-gray-900);
+	--color-button-fg: var(--color-white);
+	--color-button-hover: var(--color-gray-700);
 	--color-input-bg: var(--color-gray-50);
 	--color-input-fg: var(--color-gray-900);
 	--color-placeholder: var(--color-gray-500);
@@ -763,7 +765,8 @@ ol, ul {
 	/* "1" second duration */
 	--1s: 1ms;
 
-	--header-height: 72px;
+	--header-height: 54px;
+	--peak-height: 84px;
 }
 
 /* dark theme */
@@ -796,9 +799,38 @@ ol, ul {
 	}
 }
 
+/* html,
+body {
+ padding: 0;
+ margin: 0;
+ height: 100vh;
+ height: var(--doc-height);
+}
+
+
+
+body > div {
+	height: 100%;
+} */
+
+html, body, body > div {
+	height: 100%;
+	overflow: hidden;
+}
+
+main {
+	height: calc(100% - var(--header-height));
+	overflow: hidden;
+}
+
 h1, h2, h3, h4, h5, h6 {
 	font-size: inherit;
 	font-weight:800;
+}
+
+a {
+	text-decoration: underline;
+	border: none;
 }
 
 .leaflet-bar a {
@@ -808,4 +840,11 @@ h1, h2, h3, h4, h5, h6 {
 button {
 	font-weight: 800;
 	text-transform: uppercase;
-}header.svelte-z6oqj9{position:relative;padding:16px 8px;max-width:600px;margin:0 auto;display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:justify;justify-content:space-between;font-size:var(--16px);border-bottom:2px solid var(--color-fg);height:var(--header-height)}h1.svelte-z6oqj9,p.svelte-z6oqj9{font-size:inherit;font-weight:400;line-height:1;margin:0}h1.svelte-z6oqj9{font-weight:800;text-transform:uppercase;margin-bottom:4px}button.svelte-z6oqj9{padding:0;line-height:1;border:none;width:36px;height:36px}.about svg{vertical-align:bottom}
+	/* box-shadow: 3px 3px 0px 0px var(--color-gray-500); */
+	/* border: 1px solid var(--color-bg); */
+}
+
+button:hover {
+	/* transform: translate(1px, 1px); */
+	/* box-shadow: 2px 2px 0px 0px var(--color-gray-700); */
+}header.svelte-67k1gd{position:relative;max-width:600px;margin:0 auto;font-size:var(--16px);height:var(--header-height);padding:0 8px}.wrapper.svelte-67k1gd{display:-webkit-box;display:flex;-webkit-box-align:center;align-items:center;-webkit-box-pack:justify;justify-content:space-between;padding:8px 0;border-bottom:3px solid var(--color-fg);width:100%}h1.svelte-67k1gd,p.svelte-67k1gd{font-size:inherit;font-weight:400;line-height:1;margin:0}h1.svelte-67k1gd{font-weight:800;text-transform:uppercase;margin-bottom:4px}button.svelte-67k1gd{padding:0;line-height:1;border:none;width:36px;height:36px}.about svg{vertical-align:bottom}

@@ -22,48 +22,70 @@
 	$: images = data?.images;
 	$: game = data?.game;
 
+	const onResize = () => {
+		const prop = "--doc-height";
+		const val = `${window.innerHeight}px`;
+		document.documentElement.style.setProperty(prop, val);
+	};
+
 	onMount(async () => {
+		window.addEventListener("resize", onResize);
+		onResize();
+
 		const timestamp = Date.now();
 		const url = `https://pudding.cool/games/location-data/game.json?version=${timestamp}`;
 		data = await loadJson(url);
-		console.log(data);
 	});
 </script>
 
 <article>
-	<!-- <ul>
-		{#each c1 as background}
-			<li style:background />
-		{/each}
-	</ul>
-	<ul>
-		{#each c2 as background}
-			<li style:background />
-		{/each}
-	</ul> -->
 	{#if data}
-		<Clues {images} />
-		<Guess {latitude} {longitude} />
+		<section id="clues">
+			<Clues {images} />
+		</section>
+		<section id="guess">
+			<Guess {latitude} {longitude} />
+		</section>
 	{/if}
 	<About />
 	<Stats {game} />
 </article>
 
 <style>
-	ul {
-		display: flex;
-		list-style: none;
-		margin-bottom: 2rem;
-	}
-	li {
-		width: 4rem;
-		height: 4rem;
-	}
 	article {
+		--map-height: 280px;
 		max-width: 600px;
 		margin: 0 auto;
+		padding: 0 8px;
 		display: flex;
 		flex-direction: column;
 		position: relative;
+		height: 100%;
+	}
+
+	section {
+		flex: 1;
+	}
+
+	#clues {
+		z-index: var(--z-middle);
+	}
+
+	#guess {
+		z-index: var(--z-top);
+		height: var(--peak-height);
+		flex: 0;
+	}
+
+	@media only screen and (min-height: 860px) {
+		#guess {
+			height: auto;
+		}
+	}
+
+	@media only screen and (min-height: 1080px) {
+		#guess {
+			--map-height: 320px;
+		}
 	}
 </style>

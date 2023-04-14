@@ -1,7 +1,8 @@
 <script>
 	import viewport from "$stores/viewport.js";
 
-	export let images;
+	export let index;
+	export let image;
 
 	const baseUrl =
 		"https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file";
@@ -11,32 +12,28 @@
 	$: width = $viewport.width < 400 ? 512 : 1024;
 	$: prefix = reveal ? "hide" : "show";
 	$: suffix = reveal ? "" : " (spoilers!)";
+	$: src = `${baseUrl}/${title}&width=${width}`;
+	$: title = image.title;
+	$: credit = image.credit;
 </script>
 
-{#each images as { title, credit }, i}
-	{@const src = `${baseUrl}/${title}&width=${width}`}
-	<div class="slide">
-		<figure>
-			<div class="figure-img">
-				<img {src} alt={title} />
-			</div>
-			<figcaption>
-				<button on:click={() => (reveal = !reveal)}
-					>{prefix} attribution{suffix}</button
-				>
-				<span class:reveal>
-					{@html credit}
-				</span>
-			</figcaption>
-		</figure>
-	</div>
-{/each}
+<figure>
+	<div
+		role="img"
+		style="background-image: url('{src}');"
+		aria-label="mystery photo {index} of 5"
+	/>
+	<figcaption>
+		<button on:click={() => (reveal = !reveal)}
+			>{prefix} attribution{suffix}</button
+		>
+		<span class:reveal>
+			{@html credit}
+		</span>
+	</figcaption>
+</figure>
 
 <style>
-	.slide {
-		aspect-ratio: 1;
-	}
-
 	figure {
 		display: flex;
 		flex-direction: column;
@@ -44,16 +41,12 @@
 		height: 100%;
 	}
 
-	.figure-img {
-		/* flex-grow: 1; */
-		overflow: hidden;
-	}
-
-	img {
-		object-fit: contain;
+	[role="img"] {
 		width: 100%;
 		height: 100%;
-		/* border: 1px solid black; */
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center;
 	}
 
 	figcaption {
@@ -77,9 +70,9 @@
 		visibility: visible;
 	}
 
-	@media only screen and (min-width: 600px) {
+	/* @media only screen and (min-width: 600px) {
 		.slide {
 			aspect-ratio: 1.5;
 		}
-	}
+	} */
 </style>

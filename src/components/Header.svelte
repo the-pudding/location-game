@@ -6,42 +6,48 @@
 </script>
 
 <header>
-	<div class="title">
-		<h1>Where in the USA is this?</h1>
-		<p class="brand">
-			A daily game from&nbsp;<a href="https://pudding.cool">The Pudding</a>
-		</p>
-	</div>
+	<div class="wrapper">
+		<div class="title">
+			<h1>Where in the USA is this?</h1>
+			<p class="brand">
+				A daily game from&nbsp;<a href="https://pudding.cool">The Pudding</a>
+			</p>
+		</div>
 
-	<div class="about">
-		<button
-			aria-label="about"
-			on:click={() => {
-				$overlay = "about";
-			}}><HelpCircle /></button
-		>
+		<div class="about">
+			<button
+				aria-label="about"
+				on:click={() => {
+					$overlay = "about";
+				}}><HelpCircle /></button
+			>
 
-		<button
-			aria-label="stats"
-			on:click={() => {
-				$overlay = "stats";
-			}}><BarChart2 /></button
-		>
+			<button
+				aria-label="stats"
+				on:click={() => {
+					$overlay = "stats";
+				}}><BarChart2 /></button
+			>
+		</div>
 	</div>
 </header>
 
 <style>
 	header {
 		position: relative;
-		padding: 16px 8px;
 		max-width: 600px;
 		margin: 0 auto;
+		font-size: var(--16px);
+		height: var(--header-height);
+		padding: 0 8px;
+	}
+	.wrapper {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		font-size: var(--16px);
-		border-bottom: 2px solid var(--color-fg);
-		height: var(--header-height);
+		padding: 8px 0;
+		border-bottom: 3px solid var(--color-fg);
+		width: 100%;
 	}
 
 	h1,

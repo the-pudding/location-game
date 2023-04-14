@@ -14,7 +14,7 @@
 		{@const text = answered ? format(",")($guesses[i]?.distance) : undefined}
 		<div class="item" data-index={i + 1} class:current class:locked>
 			{#if answered}
-				{text}
+				{text} mi
 			{:else if current}<MapPin />
 			{:else}
 				<Lock />
@@ -29,39 +29,34 @@
 		display: flex;
 		justify-content: space-between;
 		padding: 0;
-		border-top: 2px solid var(--color-fg);
-		border-bottom: 2px solid var(--color-fg);
-		margin: 24px 0 0px 0;
 	}
 
 	.item {
 		flex: 1;
 		font-size: var(--12px);
 		position: relative;
-		background: var(--color-gray-100);
+		background: var(--color-gray-300);
 		text-align: center;
 		padding: 8px 0;
-		border-right: 2px solid var(--color-fg);
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		font-weight: 800;
+		border-right: 4px solid var(--color-bg);
 	}
 
-	.item:first-of-type {
-		border-left: 2px solid var(--color-fg);
-		/* border-right: none; */
+	.item:last-of-type {
+		border-right: none;
 	}
 
 	.item:before {
 		content: attr(data-index);
 		display: block;
 		position: absolute;
-		top: -4px;
-		left: 0;
+		top: 2px;
+		right: 4px;
 		width: 100%;
-		text-align: center;
-		transform: translate(0, -100%);
+		text-align: right;
 		line-height: 1;
 		pointer-events: none;
 		color: var(--color-gray-600);
