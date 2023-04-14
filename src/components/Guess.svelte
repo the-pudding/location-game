@@ -32,10 +32,11 @@
 		const newGuess = { ...guess, i: $clueIndex, threshold };
 		$guesses = [...$guesses, newGuess];
 		$clueIndex += 1;
-		setTimeout(() => {
-			delay = false;
-			reveal = false;
-		}, 1000);
+		if (!$gameOver)
+			setTimeout(() => {
+				delay = false;
+				reveal = false;
+			}, 1000);
 	}
 
 	function clickToggle() {
