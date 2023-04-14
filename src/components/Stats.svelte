@@ -6,8 +6,6 @@
 
 	export let game;
 
-	$: console.log($stats);
-
 	$: if ($gameOver) {
 		const newStat = {
 			game,

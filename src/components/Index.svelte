@@ -15,8 +15,6 @@
 	let visible;
 	let game;
 
-	// const c1 = ["#fbb4b9", "#f768a1", "#ae017e"];
-	// const c2 = ["#cc9f8b", "#d3d4d4", "#fcb031"];
 	$: latitude = data?.circle?.latitude;
 	$: longitude = data?.circle?.longitude;
 	$: images = data?.images;

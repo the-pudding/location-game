@@ -2,7 +2,9 @@ import { ascending } from "d3";
 import { writable, derived } from "svelte/store";
 import { persisted } from "svelte-local-storage-store";
 
+export const RADIUS = 5;
 export const numGuesses = 5;
+export const thresholds = [5, 100, 200];
 
 export const overlay = writable(undefined);
 export let clueIndex = writable(0);

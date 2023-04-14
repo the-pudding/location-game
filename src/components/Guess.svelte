@@ -2,13 +2,20 @@
 	import { ChevronsUp, ChevronsDown } from "lucide-svelte";
 	import Map from "$components/Guess.Map.svelte";
 	import Items from "$components/Guess.Items.svelte";
-	import { clueIndex, guesses, gameOver, best } from "$stores/misc.js";
+	import {
+		clueIndex,
+		guesses,
+		gameOver,
+		best,
+		thresholds
+	} from "$stores/misc.js";
 	export let latitude;
 	export let longitude;
 
 	let placed;
 	let guess;
 	let reveal;
+	let delay;
 
 	$: message = $gameOver
 		? `Best guess: ${$best.distance} miles from the location`
@@ -17,10 +24,18 @@
 	$: showGuessPrompt = placed;
 
 	function clickGuess() {
+		if (delay) return;
+		delay = true;
 		placed = false;
-		const newGuess = { ...guess, i: $clueIndex };
+		const t = thresholds.findIndex((t) => guess.distance < t);
+		const threshold = t >= 0 ? t : thresholds.length;
+		const newGuess = { ...guess, i: $clueIndex, threshold };
 		$guesses = [...$guesses, newGuess];
 		$clueIndex += 1;
+		setTimeout(() => {
+			delay = false;
+			reveal = false;
+		}, 1000);
 	}
 
 	function clickToggle() {
@@ -98,6 +113,18 @@
 	.btn-guess {
 		width: 15rem;
 		font-size: var(--24px);
+		background-size: auto 200%;
+		background-image: linear-gradient(
+			to bottom,
+			var(--sequential-0) 0%,
+			var(--sequential-1) 50%,
+			var(--sequential-2) 100%
+		);
+		transition: background-position 0.25s ease-in-out;
+	}
+
+	.btn-guess:hover {
+		background-position: center 90%;
 	}
 
 	.toggle {
@@ -109,6 +136,10 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	p.message {
+		font-size: var(--18px);
 	}
 
 	@media only screen and (min-height: 860px) {

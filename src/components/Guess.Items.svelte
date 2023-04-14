@@ -1,7 +1,13 @@
 <script>
 	import { range, format } from "d3";
-	import { numGuesses, guesses, clueIndex } from "$stores/misc.js";
+	import { numGuesses, guesses, clueIndex, thresholds } from "$stores/misc.js";
 	import { Lock, MapPin } from "lucide-svelte";
+
+	const getThresholdClass = (g) => {
+		const d = g?.distance;
+		const i = d === undefined ? undefined : thresholds.findIndex((t) => d < t);
+		return i >= 0 ? i : "";
+	};
 
 	$: items = range(numGuesses);
 </script>
@@ -12,7 +18,14 @@
 		{@const locked = i > $clueIndex}
 		{@const current = i === $clueIndex}
 		{@const text = answered ? format(",")($guesses[i]?.distance) : undefined}
-		<div class="item" data-index={i + 1} class:current class:locked>
+		{@const thresh = answered ? getThresholdClass($guesses[i]) : ""}
+		<div
+			class="item threshold-{thresh}"
+			data-index={i + 1}
+			class:current
+			class:locked
+			class:answered
+		>
 			{#if answered}
 				{text} mi
 			{:else if current}<MapPin />
@@ -35,14 +48,15 @@
 		flex: 1;
 		font-size: var(--12px);
 		position: relative;
-		background: var(--color-gray-300);
 		text-align: center;
 		padding: 8px 0;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		font-weight: 800;
-		border-right: 4px solid var(--color-bg);
+		outline: 4px solid var(--color-bg);
+		transform-origin: center center;
+		z-index: var(--z-middle);
 	}
 
 	.item:last-of-type {
@@ -54,7 +68,7 @@
 		display: block;
 		position: absolute;
 		top: 2px;
-		right: 4px;
+		right: 6px;
 		width: 100%;
 		text-align: right;
 		line-height: 1;
@@ -63,7 +77,20 @@
 		font-weight: 400;
 	}
 
-	.item.current {
-		/* border: 2px solid var(--color-mark); */
+	.answered {
+		animation: answer 0.5s ease-in-out;
+		z-index: var(--z-top);
+	}
+
+	@keyframes answer {
+		0% {
+			transform: scale(1);
+		}
+		50% {
+			transform: scale(1.2);
+		}
+		100% {
+			transform: scale(1);
+		}
 	}
 </style>

@@ -4,8 +4,6 @@
 
 /* colors defined in variables.css */
 :root {
-	--doc-height: 100%;
-	
 	/* font */
 	--sans:  system-ui, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
 	--serif: Iowan Old Style, Times New Roman, Times, serif;
@@ -39,7 +37,8 @@
 	/* "1" second duration */
 	--1s: 1ms;
 
-	--header-height: 54px;
+	--doc-height: 100%;
+	--header-height: 56px;
 	--peak-height: 84px;
 }
 
@@ -120,4 +119,42 @@ button {
 button:hover {
 	/* transform: translate(1px, 1px); */
 	/* box-shadow: 2px 2px 0px 0px var(--color-gray-700); */
+}
+
+.threshold- {
+	background: var(--color-gray-300) !important;
+}
+
+.threshold-0 {
+	background: var(--sequential-0) !important;;
+	color: var(--color-bg);
+}
+
+.threshold-1 {
+	background: var(--sequential-1) !important;;
+}
+
+.threshold-2 {
+	background: var(--sequential-2) !important;;
+}
+
+.leaflet-container a {
+	color: var(--color-fg) !important;
+	text-decoration: underline !important;
+}
+
+.leaflet-control-zoom a {
+	color: var(--color-bg) !important;
+	background: var(--color-fg) !important;
+	text-decoration: none !important;
+	border-radius: var(--border-radius) !important;
+	margin-top: 2px;
+}
+
+.leaflet-control-zoom a:hover {
+	background: var(--color-gray-700) !important;
+}
+
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+	border: none !important;
 }
