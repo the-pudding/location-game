@@ -3,6 +3,7 @@
 	import { onMount } from "svelte";
 	import { guesses, clueIndex, best, gameOver } from "$stores/misc.js";
 	import "leaflet/dist/leaflet.css";
+	import destinationPoint from "$utils/destinationPoint.js";
 
 	export let latitude;
 	export let longitude;
@@ -23,9 +24,51 @@
 
 	$: if (L && latitude) answerLocation = L.latLng(latitude, longitude);
 	$: if ($gameOver) showAnswer();
-	$: render($guesses.length);
+	$: renderGuesses($guesses.length);
 
-	function render() {
+	function renderRing() {
+		if (!$guesses.length) return;
+		// latest guess
+		const { location, distance } = guess;
+		const inc = distance > 100 ? 100 : 20;
+		const radiusInner = Math.floor(distance / inc) * inc;
+		const radiusOuter = radiusInner + inc;
+		const radiusStroke = radiusInner + inc / 2;
+		const size = radiusOuter * 2;
+
+		// const html = `
+		// 	<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}">
+		// 		<circle cx="${radiusOuter}" cy="${radiusOuter}" r="${radiusInner}" fill="none" stroke="pink" stroke-width="${inc}" />
+		// 	</svg>
+		// `;
+
+		// const ringMarker = L.marker(location, {
+		// 	interactive: false,
+		// 	icon: L.divIcon({
+		// 		className: "ring",
+		// 		html,
+		// 		iconSize: [size, size],
+		// 		iconAnchor: [radiusOuter, radiusOuter]
+		// 	})
+		// }).addTo(group);
+
+		// ringMarker.getElement().style.opacity = '0';
+
+		// setTimeout(() => {
+		// 	ringMarker.remove();
+		// }, 10000);
+
+		const radiusOuterMeters = radiusOuter * 1609.34;
+		const northEast = destinationPoint(location, radiusOuterMeters, 45);
+		const southWest = destinationPoint(location, radiusOuterMeters, 225);
+
+		const bounds = L.latLngBounds(northEast, southWest);
+		map.fitBounds(bounds, { padding: [50, 50] });
+	}
+
+	function renderGuesses(afterGuess) {
+		if (!$gameOver && afterGuess) renderRing();
+
 		// previous guesses
 		$guesses.forEach((guess) => {
 			const iconGuess = L.divIcon({
@@ -89,7 +132,7 @@
 			answerLocation.distanceTo(location) * MILES_IN_A_METER
 		);
 
-		render();
+		renderGuesses();
 
 		const iconGuess = L.divIcon({
 			className: "icon-guess",
