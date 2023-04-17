@@ -1,15 +1,31 @@
 <script>
 	import { range, format } from "d3";
-	import { numGuesses, guesses, clueIndex, thresholds } from "$stores/misc.js";
+	import {
+		NUM_GUESSES,
+		THRESHOLDS,
+		guesses,
+		clueIndex,
+		gameOver
+	} from "$stores/misc.js";
 	import { Lock, MapPin } from "lucide-svelte";
 
-	const getThresholdClass = (g) => {
-		const d = g?.distance;
-		const i = d === undefined ? undefined : thresholds.findIndex((t) => d < t);
-		return i >= 0 ? i : "";
-	};
+	function getText(guess) {
+		const dist = guess?.distance;
+		if (dist !== undefined) {
+			const d = dist < 0.1 ? 2 : dist < 10 ? 1 : 0;
+			const digits = dist === 0 ? 0 : d;
+			return `${format(`,.${digits}f`)(dist)} mi`;
+		}
+		return "";
+	}
 
-	$: items = range(numGuesses);
+	function getThresholdClass(g) {
+		const d = g?.distance;
+		const i = d === undefined ? undefined : THRESHOLDS.findIndex((t) => d < t);
+		return i >= 0 ? i : "";
+	}
+
+	$: items = range(NUM_GUESSES);
 </script>
 
 <div class="items">
@@ -17,7 +33,7 @@
 		{@const answered = i < $clueIndex}
 		{@const locked = i > $clueIndex}
 		{@const current = i === $clueIndex}
-		{@const text = answered ? format(",")($guesses[i]?.distance) : undefined}
+		{@const text = getText($guesses[i])}
 		{@const thresh = answered ? getThresholdClass($guesses[i]) : ""}
 		<div
 			class="item threshold-{thresh}"
@@ -27,7 +43,7 @@
 			class:answered
 		>
 			{#if answered}
-				{text} mi
+				{text}
 			{:else if current}<MapPin />
 			{:else}
 				<Lock />
@@ -77,7 +93,7 @@
 		text-align: right;
 		line-height: 1;
 		pointer-events: none;
-		color: var(--color-gray-600);
+		opacity: 0.67;
 		font-weight: 800;
 	}
 

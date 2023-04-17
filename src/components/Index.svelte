@@ -31,7 +31,7 @@
 		onResize();
 
 		const timestamp = Date.now();
-		const url = `https://pudding.cool/games/location-data/game.json?version=${timestamp}`;
+		const url = `https://pudding.cool/games/location-data/games/0.json?version=${timestamp}`;
 		data = await loadJson(url);
 	});
 </script>

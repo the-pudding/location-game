@@ -1,7 +1,7 @@
 <!-- LeafletMap.svelte -->
 <script>
 	import { onMount } from "svelte";
-	import { guesses, clueIndex, best, gameOver } from "$stores/misc.js";
+	import { RADIUS, guesses, clueIndex, best, gameOver } from "$stores/misc.js";
 	import "leaflet/dist/leaflet.css";
 	import destinationPoint from "$utils/destinationPoint.js";
 
@@ -11,6 +11,7 @@
 	export let guess;
 
 	const MILES_IN_A_METER = 0.000621371;
+	const METERS_IN_A_MILE = 1609.34;
 	const maxZoom = 14;
 	const iconSize = [20, 20];
 
@@ -29,34 +30,24 @@
 	function renderRing() {
 		if (!$guesses.length) return;
 		// latest guess
-		const { location, distance } = guess;
+		const { location, distance } = $guesses[$guesses.length - 1];
 		const inc = distance > 100 ? 100 : 20;
 		const radiusInner = Math.floor(distance / inc) * inc;
 		const radiusOuter = radiusInner + inc;
 		const radiusStroke = radiusInner + inc / 2;
 		const size = radiusOuter * 2;
 
-		// const html = `
-		// 	<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}">
-		// 		<circle cx="${radiusOuter}" cy="${radiusOuter}" r="${radiusInner}" fill="none" stroke="pink" stroke-width="${inc}" />
-		// 	</svg>
-		// `;
+		// console.log(location, distance, radiusStroke);
 
-		// const ringMarker = L.marker(location, {
-		// 	interactive: false,
-		// 	icon: L.divIcon({
-		// 		className: "ring",
-		// 		html,
-		// 		iconSize: [size, size],
-		// 		iconAnchor: [radiusOuter, radiusOuter]
-		// 	})
+		// L.circle(location, {
+		// 	radius: radiusInner * METERS_IN_A_MILE,
+		// 	className: "guess-circle"
 		// }).addTo(group);
 
-		// ringMarker.getElement().style.opacity = '0';
-
-		// setTimeout(() => {
-		// 	ringMarker.remove();
-		// }, 10000);
+		// L.circle(location, {
+		// 	radius: radiusOuter * METERS_IN_A_MILE,
+		// 	className: "guess-circle"
+		// }).addTo(group);
 
 		const radiusOuterMeters = radiusOuter * 1609.34;
 		const northEast = destinationPoint(location, radiusOuterMeters, 45);
@@ -111,6 +102,11 @@
 			iconSize
 		});
 
+		L.circle(answerLocation, {
+			radius: RADIUS * METERS_IN_A_MILE,
+			className: "enclosing-circle"
+		}).addTo(group);
+
 		L.marker($best.location, { icon: iconGuess }).addTo(group);
 
 		L.marker(answerLocation, { icon: iconAnswer }).addTo(group);
@@ -124,13 +120,15 @@
 	}
 
 	function handleMapClick(e) {
+		if ($gameOver) return;
 		group.clearLayers();
 		placed = true;
 		const location = e.latlng;
 
-		const distance = Math.round(
-			answerLocation.distanceTo(location) * MILES_IN_A_METER
-		);
+		const distance = +Math.max(
+			0,
+			answerLocation.distanceTo(location) * MILES_IN_A_METER - RADIUS
+		).toFixed(2);
 
 		renderGuesses();
 

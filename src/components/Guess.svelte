@@ -3,11 +3,12 @@
 	import Map from "$components/Guess.Map.svelte";
 	import Items from "$components/Guess.Items.svelte";
 	import {
+		NUM_GUESSES,
+		THRESHOLDS,
 		clueIndex,
 		guesses,
 		gameOver,
-		best,
-		thresholds
+		best
 	} from "$stores/misc.js";
 	export let latitude;
 	export let longitude;
@@ -20,6 +21,8 @@
 
 	$: message = $gameOver
 		? `Best guess: ${$best.distance} miles from the location`
+		: delay
+		? "The location is somewehere in this area"
 		: "Place pin on map to guess";
 	$: showMessage = $gameOver || !placed;
 	$: showGuessPrompt = placed;
@@ -29,16 +32,21 @@
 		if (delay) return;
 		delay = true;
 		placed = false;
-		const t = thresholds.findIndex((t) => guess.distance < t);
-		const threshold = t >= 0 ? t : thresholds.length;
+		const t = THRESHOLDS.findIndex((t) => guess.distance < t);
+		const threshold = t >= 0 ? t : THRESHOLDS.length;
 		const newGuess = { ...guess, i: $clueIndex, threshold };
+
+		if (newGuess.distance === 0) {
+			$clueIndex = NUM_GUESSES;
+		} else $clueIndex += 1;
+
 		$guesses = [...$guesses, newGuess];
-		$clueIndex += 1;
+
 		if (!$gameOver)
 			setTimeout(() => {
 				delay = false;
 				reveal = false;
-			}, 1000);
+			}, 2000);
 	}
 
 	function clickToggle() {

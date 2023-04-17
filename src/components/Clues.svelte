@@ -6,7 +6,7 @@
 
 	import Image from "$components/Clues.Image.svelte";
 	import mq from "$stores/mq.js";
-	import { clueIndex } from "$stores/misc.js";
+	import { NUM_GUESSES, clueIndex, gameOver } from "$stores/misc.js";
 
 	export let images;
 
@@ -20,9 +20,10 @@
 		detail === "right" ? sliderEl.next() : sliderEl.prev();
 	};
 
-	$: sliderEl?.jump($clueIndex);
+	$: if (!$gameOver) sliderEl?.jump($clueIndex);
 	$: left = current === 0 ? "left" : null;
-	$: right = current >= $clueIndex ? "right" : null;
+	$: right =
+		current >= $clueIndex || current === NUM_GUESSES - 1 ? "right" : null;
 	$: disable = [left, right].filter((d) => d);
 </script>
 

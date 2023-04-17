@@ -14,7 +14,7 @@
 	section {
 		display: none;
 		position: absolute;
-		top: 0;
+		top: 3px;
 		left: 0;
 		background: var(--color-bg);
 		z-index: var(--z-overlay);

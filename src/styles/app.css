@@ -169,8 +169,23 @@ button.btn-fancy {
 		transition: background-position 0.25s ease-in-out;
 }
 
+.enclosing-circle {
+	stroke: var(--color-fg);
+	fill: var(--color-fg);
+	fill-opacity: 0.25;
+	stroke-width: 1px;
+}
+
+.guess-circle {
+	stroke: var(--color-fg);
+	stroke-opacity: 0.5;
+	fill: none;
+}
+
+
 @media (hover: hover) and (pointer: fine) {
 	button.btn-fancy:hover {
 		background-position: center 90%;
 	}
 }
+
