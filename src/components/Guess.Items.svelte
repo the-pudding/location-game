@@ -78,7 +78,7 @@
 		line-height: 1;
 		pointer-events: none;
 		color: var(--color-gray-600);
-		font-weight: 400;
+		font-weight: 800;
 	}
 
 	.answered {
