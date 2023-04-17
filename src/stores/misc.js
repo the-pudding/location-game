@@ -4,7 +4,7 @@ import { persisted } from "svelte-local-storage-store";
 
 export const RADIUS = 5;
 export const NUM_GUESSES = 5;
-export const THRESHOLDS = [5, 100, 200];
+export const THRESHOLDS = [0, 100, 200];
 
 export const overlay = writable(undefined);
 export const clueIndex = writable(0);
@@ -23,3 +23,4 @@ export const gameOver = derived(
 );
 
 export const stats = persisted("pudding_location_game_stats", []);
+export const firstTime = persisted("pudding_location_game_first", true);

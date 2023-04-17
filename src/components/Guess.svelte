@@ -35,9 +35,9 @@
 		if (delay) return;
 		delay = true;
 		placed = false;
-		const t = THRESHOLDS.findIndex((t) => guess.distance < t);
+		const t = THRESHOLDS.findIndex((t) => guess.distance <= t);
 		const threshold = t >= 0 ? t : THRESHOLDS.length;
-		const newGuess = { ...guess, i: $clueIndex, threshold };
+		const newGuess = { ...guess, clue: $clueIndex, threshold };
 
 		if (newGuess.distance === 0) {
 			$clueIndex = NUM_GUESSES;

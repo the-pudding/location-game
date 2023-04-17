@@ -65,7 +65,7 @@
 			const iconGuess = L.divIcon({
 				className: "icon-guess",
 				html: `<span class="threshold-${guess.threshold}">${
-					guess.i + 1
+					guess.clue + 1
 				}</span>`,
 				iconSize
 			});

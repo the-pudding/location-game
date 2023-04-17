@@ -20,7 +20,7 @@
 	--font-body: var(--sans);
 	--font-form: var(--sans);
 	--color-bg: var(--color-white);
-	--color-fg: var(--color-gray-900);
+	--color-fg: var(--color-gray-1000);
 	--color-primary: var(--color-black);
 	--color-link: var(--color-black);
 	--color-focus: var(--sequential-1);
@@ -119,16 +119,20 @@ button {
 }
 
 .threshold-0 {
-	background: var(--sequential-0) !important;;
+	background: var(--sequential-0) !important;
 	color: var(--color-bg);
 }
 
 .threshold-1 {
-	background: var(--sequential-1) !important;;
+	background: var(--sequential-1) !important;
 }
 
 .threshold-2 {
-	background: var(--sequential-2) !important;;
+	background: var(--sequential-2) !important;
+}
+
+.threshold-3 {
+	background: var(--sequential-3) !important;
 }
 
 .leaflet-container a {

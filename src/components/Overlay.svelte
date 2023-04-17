@@ -2,12 +2,13 @@
 	import { overlay } from "$stores/misc.js";
 
 	export let section;
+	export let closeText = "Close";
 	$: visible = $overlay === section;
 </script>
 
 <section id={section} class:visible>
 	<slot />
-	<button on:click={() => ($overlay = undefined)}>Close</button>
+	<button on:click={() => ($overlay = undefined)}>{closeText}</button>
 </section>
 
 <style>

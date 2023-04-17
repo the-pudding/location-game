@@ -1,13 +1,16 @@
 {
 	"sequential": {
+		"3": {
+			"value": "#edbfb9"
+		},
 		"2": {
-			"value": "#fbb4b9"
+			"value": "#e490a6"
 		},
 		"1": {
-			"value": "#f768a1"
+			"value": "#d75c93"
 		},
 		"0": {
-			"value": "#ae017e"
+			"value": "#c80080"
 		}
 	}
 }

@@ -12,8 +12,8 @@
 
 	function getThresholdClass(g) {
 		const d = g?.distance;
-		const i = d === undefined ? undefined : THRESHOLDS.findIndex((t) => d < t);
-		return i >= 0 ? i : "";
+		const i = d === undefined ? undefined : THRESHOLDS.findIndex((t) => d <= t);
+		return i >= 0 ? i : THRESHOLDS.length;
 	}
 
 	$: items = range(NUM_GUESSES);
