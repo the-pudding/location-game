@@ -21,7 +21,9 @@
 	let firstClick;
 
 	$: message = $gameOver
-		? `Best guess: ${formatGuessDistance($best)} miles from the location`
+		? `Best guess: ${formatGuessDistance(
+				$best
+		  )} from the location. See ya tomorrow!`
 		: delay
 		? "The location is somewehere in this area"
 		: "Place pin on map to guess";
@@ -79,7 +81,9 @@
 		{#if showMessage}
 			<p class="message">{message}</p>
 		{:else if showGuessPrompt}
-			<button class="btn-guess btn-fancy" on:click={clickGuess}>Guess!</button>
+			<button disabled={delay} class="btn-guess btn-fancy" on:click={clickGuess}
+				>Guess!</button
+			>
 		{/if}
 	</div>
 </div>
@@ -147,6 +151,7 @@
 
 	p.message {
 		font-size: var(--18px);
+		font-weight: 800;
 	}
 
 	@media only screen and (min-height: 860px) {
