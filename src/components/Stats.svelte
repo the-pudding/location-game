@@ -28,7 +28,6 @@
 	$: distribution = distances.length
 		? groups(distanceThresholds, (d) => d)
 		: undefined;
-	$: console.log($stats);
 
 	onMount(() => {
 		// TODO remove

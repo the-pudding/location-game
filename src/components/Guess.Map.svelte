@@ -37,8 +37,6 @@
 		const radiusStroke = radiusInner + inc / 2;
 		const size = radiusOuter * 2;
 
-		// console.log(location, distance, radiusStroke);
-
 		// L.circle(location, {
 		// 	radius: radiusInner * METERS_IN_A_MILE,
 		// 	className: "guess-circle"

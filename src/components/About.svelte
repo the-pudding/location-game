@@ -1,11 +1,26 @@
 <script>
-	import { getContext } from "svelte";
+	import { onMount, getContext } from "svelte";
+	import { firstTime, overlay } from "$stores/misc.js";
 	import Overlay from "$components/Overlay.svelte";
 	const copy = getContext("copy");
+	let hideThings;
+	let second;
+	let closeText;
+
+	$: if (hideThings && $overlay === undefined) hideThings = false;
+
+	onMount(() => {
+		if ($firstTime) {
+			hideThings = $firstTime;
+			$overlay = "about";
+			closeText = "Start";
+		}
+		$firstTime = true;
+	});
 </script>
 
-<Overlay section="about">
-	<h3>About</h3>
+<Overlay section="about" {closeText}>
+	<h3>How to Play</h3>
 	<p>{@html copy.about}</p>
 
 	<ul>
@@ -14,24 +29,40 @@
 		{/each}
 	</ul>
 
-	<h3>Data</h3>
-	<p>{@html copy.data}</p>
+	{#if !hideThings}
+		<h3>Data</h3>
+		<p>{@html copy.data}</p>
+	{/if}
 
-	<p>{@html copy.outro}</p>
+	<p>
+		{@html copy.credit}
+		{#if !hideThings}{@html copy.support}{/if}
+	</p>
 </Overlay>
 
 <style>
+	h3 {
+		margin-bottom: 0;
+	}
+
+	p {
+		margin-top: 8px;
+	}
+
 	ul {
-		margin: 0;
+		margin-bottom: 16px;
 		padding: 0;
 		display: flex;
-		flex-direction: column;
+		flex-wrap: wrap;
 	}
+
 	li {
 		list-style-type: none;
-		width: 10rem;
+		width: 25%;
 		padding: 4px 8px;
 		font-weight: 800;
 		margin-bottom: 2px;
+		text-align: center;
+		line-height: 1.2;
 	}
 </style>
