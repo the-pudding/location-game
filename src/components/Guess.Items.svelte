@@ -1,5 +1,5 @@
 <script>
-	import { range, format } from "d3";
+	import { range } from "d3";
 	import {
 		NUM_GUESSES,
 		THRESHOLDS,
@@ -8,16 +8,7 @@
 		gameOver
 	} from "$stores/misc.js";
 	import { Lock, MapPin } from "lucide-svelte";
-
-	function getText(guess) {
-		const dist = guess?.distance;
-		if (dist !== undefined) {
-			const d = dist < 0.1 ? 2 : dist < 10 ? 1 : 0;
-			const digits = dist === 0 ? 0 : d;
-			return `${format(`,.${digits}f`)(dist)} mi`;
-		}
-		return "";
-	}
+	import formatGuessDistance from "$utils/formatGuessDistance.js";
 
 	function getThresholdClass(g) {
 		const d = g?.distance;
@@ -33,7 +24,7 @@
 		{@const answered = i < $clueIndex}
 		{@const locked = i > $clueIndex}
 		{@const current = i === $clueIndex}
-		{@const text = getText($guesses[i])}
+		{@const text = formatGuessDistance($guesses[i])}
 		{@const thresh = answered ? getThresholdClass($guesses[i]) : ""}
 		<div
 			class="item threshold-{thresh}"

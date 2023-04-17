@@ -10,6 +10,7 @@
 		gameOver,
 		best
 	} from "$stores/misc.js";
+	import formatGuessDistance from "$utils/formatGuessDistance.js";
 	export let latitude;
 	export let longitude;
 
@@ -20,7 +21,7 @@
 	let firstClick;
 
 	$: message = $gameOver
-		? `Best guess: ${$best.distance} miles from the location`
+		? `Best guess: ${formatGuessDistance($best)} miles from the location`
 		: delay
 		? "The location is somewehere in this area"
 		: "Place pin on map to guess";
