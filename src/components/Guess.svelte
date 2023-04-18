@@ -2,6 +2,7 @@
 	import { ChevronsUp, ChevronsDown } from "lucide-svelte";
 	import Map from "$components/Guess.Map.svelte";
 	import Items from "$components/Guess.Items.svelte";
+	import viewport from "$stores/viewport.js";
 	import {
 		NUM_GUESSES,
 		THRESHOLDS,
@@ -21,9 +22,9 @@
 	let firstClick;
 
 	$: message = $gameOver
-		? `Best guess: ${formatGuessDistance(
-				$best
-		  )} from the location. See ya tomorrow!`
+		? `Best guess: ${formatGuessDistance($best)} from the location. ${
+				$viewport.width > 600 ? "See ya tomorrow!" : ""
+		  }`
 		: delay
 		? "The location is somewehere in this area"
 		: "Place pin on map to guess";
