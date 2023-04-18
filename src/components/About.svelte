@@ -5,15 +5,14 @@
 	const copy = getContext("copy");
 	let hideThings;
 	let second;
-	let closeText;
 
 	$: if (hideThings && $overlay === undefined) hideThings = false;
+	$: closeText = hideThings ? "Start" : "Close";
 
 	onMount(() => {
 		if ($firstTime) {
 			hideThings = $firstTime;
 			$overlay = "about";
-			closeText = "Start";
 		}
 		$firstTime = false;
 	});
