@@ -10,15 +10,17 @@
 	import Stats from "$components/Stats.svelte";
 
 	const copy = getContext("copy");
+	const baseUrl = "https://pudding.cool/games/where-data";
+	let current;
 	let data;
 	let index;
 	let visible;
 	let game;
 
+	$: game = current?.game;
 	$: latitude = data?.circle?.latitude;
 	$: longitude = data?.circle?.longitude;
 	$: images = data?.images;
-	$: game = data?.game;
 
 	const onResize = () => {
 		const prop = "--doc-height";
@@ -31,8 +33,11 @@
 		onResize();
 
 		const timestamp = Date.now();
-		const url = `https://pudding.cool/games/location-data/games/0.json?version=${timestamp}`;
-		data = await loadJson(url);
+		current = await loadJson(`${baseUrl}/current.json?version=${timestamp}`);
+		console.log({ current });
+
+		const gameUrl = `${baseUrl}/games/${current.game}.json?version=${timestamp}`;
+		data = await loadJson(gameUrl);
 	});
 </script>
 

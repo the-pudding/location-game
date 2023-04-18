@@ -1,20 +1,19 @@
 <script>
 	import viewport from "$stores/viewport.js";
+	import getWikimediaSource from "$utils/getWikimediaSource.js";
 
 	export let index;
 	export let image;
 
-	const baseUrl =
-		"https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file";
-
 	let reveal;
 
-	$: width = $viewport.width < 400 ? 512 : 1024;
-	$: prefix = reveal ? "hide" : "show";
-	$: suffix = reveal ? "" : " (spoilers!)";
-	$: src = `${baseUrl}/${title}&width=${width}`;
 	$: title = image.title;
 	$: credit = image.credit;
+	$: url = image.url;
+	$: width = $viewport.width < 400 ? 600 : 1200;
+	$: prefix = reveal ? "hide" : "show";
+	$: suffix = reveal ? "" : " (spoilers!)";
+	$: src = getWikimediaSource({ url, width });
 </script>
 
 <figure>

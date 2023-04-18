@@ -30,7 +30,7 @@
 		: undefined;
 
 	onMount(() => {
-		// TODO remove
+		// TODO remove?
 		if (window.location.href.includes("localhost"))
 			localStorage.removeItem("pudding_location_game_stats");
 	});
@@ -50,7 +50,9 @@
 		<h4>
 			Guess distribution: {#if numGames}({numGames} games played){/if}
 		</h4>
-		{#if distribution}{:else}
+		{#if distribution}
+			<p>under construction</p>
+		{:else}
 			<p>no data</p>
 		{/if}
 	</div>

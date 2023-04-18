@@ -1,27 +1,26 @@
 <script>
 	import { range } from "d3";
 	import loadJson from "$utils/loadJson.js";
+	import getWikimediaSource from "$utils/getWikimediaSource.js";
 	const timestamp = Date.now();
-	const baseData = "https://pudding.cool/games/location-data/games/";
-	const baseImage =
-		"https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file";
+	const baseData = "https://pudding.cool/games/where-data/games/";
 
 	let reveal;
+	$: start = 0;
+	$: end = start + 10;
 </script>
 
-{#each range(100) as i}
+{#each range(start, end) as i}
 	{@const url = `${baseData}${i}.json?version=${timestamp}`}
 	{#await loadJson(url)}
 		<h2>loading {i}...</h2>
 	{:then { game, images }}
 		<h2>{game}</h2>
 		<ul>
-			{#each images as { pageid, title }}
-				{@const src = `${baseImage}/${title}&width=512`}
+			{#each images as { title, url }}
+				{@const src = getWikimediaSource({ url })}
 				<li>
-					<p>{pageid}</p>
-					<p>{src}</p>
-					<img {src} alt="img" />
+					<img {src} alt={title} />
 				</li>
 			{/each}
 		</ul>
@@ -50,7 +49,7 @@
 		align-items: center;
 	}
 
-	img {
+	li {
 		width: 20%;
 	}
 

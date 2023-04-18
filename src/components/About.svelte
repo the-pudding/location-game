@@ -15,7 +15,7 @@
 			$overlay = "about";
 			closeText = "Start";
 		}
-		$firstTime = true;
+		$firstTime = false;
 	});
 </script>
 

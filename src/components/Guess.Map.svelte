@@ -52,7 +52,7 @@
 		const southWest = destinationPoint(location, radiusOuterMeters, 225);
 
 		const bounds = L.latLngBounds(northEast, southWest);
-		map.fitBounds(bounds, { padding: [50, 50] });
+		map.fitBounds(bounds, { padding: [75, 50] });
 	}
 
 	function renderGuesses(afterGuess) {
