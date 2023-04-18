@@ -6,8 +6,8 @@
 	const baseData = "https://pudding.cool/games/where-data/games/";
 
 	let reveal;
-	$: start = 0;
-	$: end = start + 10;
+	$: start = 100;
+	$: end = start + 5;
 </script>
 
 {#each range(start, end) as i}
@@ -17,10 +17,13 @@
 	{:then { game, images }}
 		<h2>{game}</h2>
 		<ul>
-			{#each images as { title, url }}
+			{#each images as { title, url, credit }}
 				{@const src = getWikimediaSource({ url })}
 				<li>
-					<img {src} alt={title} />
+					<figure>
+						<img {src} alt={title} />
+						<figcaption>{@html credit}</figcaption>
+					</figure>
 				</li>
 			{/each}
 		</ul>
