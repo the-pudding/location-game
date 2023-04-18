@@ -10,12 +10,16 @@
 	const bins = range(THRESHOLDS.length + 1);
 
 	$: if ($gameOver) {
-		const newStat = {
-			game,
-			...$best
-		};
+		// don't overwrite game
+		const match = $stats.find((d) => d.game === game);
+		if (!match) {
+			const newStat = {
+				game,
+				...$best
+			};
 
-		$stats = [...$stats, newStat];
+			$stats = [...$stats, newStat];
+		}
 	}
 
 	$: numGames = $stats.length || undefined;
