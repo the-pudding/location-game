@@ -9,9 +9,9 @@ github:
 	git push
 	
 aws-sync:
-	aws s3 sync build s3://pudding.cool/year/month/name --delete --cache-control 'max-age=31536000'
+	aws s3 sync build s3://pudding.cool/games/where --delete --cache-control 'max-age=31536000'
 
 aws-cache:
-	aws cloudfront create-invalidation --distribution-id E13X38CRR4E04D --paths '/year/month/name*'	
+	aws cloudfront create-invalidation --distribution-id E13X38CRR4E04D --paths '/games/where*'	
 
 pudding: aws-sync aws-cache
