@@ -59,7 +59,7 @@
 	li {
 		list-style-type: none;
 		width: 25%;
-		padding: 4px 8px;
+		padding: 4px 12px;
 		font-weight: 800;
 		margin-bottom: 2px;
 		text-align: center;
