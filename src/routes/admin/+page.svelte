@@ -6,7 +6,7 @@
 	const baseData = "https://pudding.cool/games/where-data/games/";
 
 	let reveal;
-	$: start = 100;
+	$: start = 195;
 	$: end = start + 5;
 </script>
 
