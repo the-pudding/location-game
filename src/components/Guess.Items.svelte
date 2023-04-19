@@ -11,7 +11,8 @@
 	import formatGuessDistance from "$utils/formatGuessDistance.js";
 
 	function getThresholdClass(g) {
-		const d = g?.distance;
+		if (!g) return "";
+		const d = g.distance;
 		const i = d === undefined ? undefined : THRESHOLDS.findIndex((t) => d <= t);
 		return i >= 0 ? i : THRESHOLDS.length;
 	}
