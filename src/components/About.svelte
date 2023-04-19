@@ -24,7 +24,7 @@
 
 	<ul>
 		{#each copy.score as value, i}
-			<li class="threshold-{i}">{@html value}</li>
+			<li class="threshold-{i}">{value}<br />miles</li>
 		{/each}
 	</ul>
 
