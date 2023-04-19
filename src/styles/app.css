@@ -172,6 +172,40 @@ button.btn-fancy {
 	fill: none;
 }
 
+.leaflet-control-scale-line {
+	background: none !important;
+	border-left: none !important;
+	border-right: none !important;
+	text-align: center;
+	--stroke-width: 1px;
+	--stroke-width-n: calc(var(--stroke-width) * -1);
+	text-shadow: var(--stroke-width-n) var(--stroke-width-n) 0 var(--color-text-outline, #fff),
+		0 var(--stroke-width-n) 0 var(--color-text-outline, #fff),
+		var(--stroke-width) var(--stroke-width-n) 0 var(--color-text-outline, #fff),
+		var(--stroke-width) 0 0 var(--color-text-outline, #fff),
+		var(--stroke-width) var(--stroke-width) 0 var(--color-text-outline, #fff),
+		0 var(--stroke-width) 0 var(--color-text-outline, #fff),
+		var(--stroke-width-n) var(--stroke-width) 0 var(--color-text-outline, #fff),
+		var(--stroke-width-n) 0 0 var(--color-text-outline, #fff) !important;  
+}
+
+.leaflet-control-scale-line:before {
+	content: "";
+	position: absolute;
+	bottom: -2px;
+	left: 0;
+	height: 4px;
+	border-left: 2px solid #777;
+}
+
+.leaflet-control-scale-line:after {
+	content: "";
+	position: absolute;
+	bottom: -2px;
+	right: 0;
+	height: 4px;
+	border-right: 2px solid #777;
+}
 
 @media (hover: hover) and (pointer: fine) {
 	button.btn-fancy:hover {

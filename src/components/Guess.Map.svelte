@@ -160,6 +160,8 @@
 		group = L.featureGroup();
 		group.addTo(map);
 
+		L.control.scale({ position: "topright", metric: false }).addTo(map);
+
 		map.on("click", handleMapClick);
 	});
 </script>
