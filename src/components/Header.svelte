@@ -1,8 +1,8 @@
 <script>
+	import { HelpCircle, BarChart2 } from "lucide-svelte";
 	import { overlay } from "$stores/misc.js";
 	import copy from "$data/copy.json";
 	import wordmark from "$svg/wordmark.svg";
-	import { HelpCircle, BarChart2 } from "lucide-svelte";
 </script>
 
 <header>

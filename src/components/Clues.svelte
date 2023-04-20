@@ -6,7 +6,12 @@
 
 	import Image from "$components/Clues.Image.svelte";
 	import mq from "$stores/mq.js";
-	import { NUM_GUESSES, clueIndex, gameOver } from "$stores/misc.js";
+	import {
+		NUM_GUESSES,
+		clueIndex,
+		gameOver,
+		currentGame
+	} from "$stores/misc.js";
 
 	export let images;
 
@@ -29,7 +34,11 @@
 
 <div class="wrapper">
 	<div class="info">
-		<p class="tagline">{copy.tagline}</p>
+		<!-- <p class="tagline">{tagline}</p> -->
+		<p class="current">
+			<strong>#{$currentGame?.game + 1}</strong>
+			{$currentGame?.date}
+		</p>
 		<p class="counter">{current + 1} of {count}</p>
 	</div>
 

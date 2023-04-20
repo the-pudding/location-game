@@ -6,6 +6,7 @@ export const RADIUS = 5;
 export const NUM_GUESSES = 5;
 export const THRESHOLDS = [0, 100, 200];
 
+export const currentGame = writable(undefined);
 export const overlay = writable(undefined);
 export const clueIndex = writable(0);
 export const guesses = writable([]);

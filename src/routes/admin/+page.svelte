@@ -6,8 +6,8 @@
 	const baseData = "https://pudding.cool/games/where-data/games/";
 
 	let reveal;
-	$: start = 195;
-	$: end = start + 5;
+	$: start = 0;
+	$: end = start + 10;
 </script>
 
 {#each range(start, end) as i}

@@ -2,6 +2,7 @@
 	import { onMount, getContext } from "svelte";
 	import { base } from "$app/paths";
 	import { shuffle } from "d3";
+	import { currentGame } from "$stores/misc.js";
 	import loadJson from "$utils/loadJson.js";
 	import Clues from "$components/Clues.svelte";
 	import Guess from "$components/Guess.svelte";
@@ -11,13 +12,12 @@
 
 	const copy = getContext("copy");
 	const baseUrl = "https://pudding.cool/games/where-data";
-	let current;
 	let data;
 	let index;
 	let visible;
 	let game;
 
-	$: game = current?.game;
+	$: game = currentGame?.game;
 	$: latitude = data?.circle?.latitude;
 	$: longitude = data?.circle?.longitude;
 	$: images = data?.images;
@@ -33,10 +33,11 @@
 		onResize();
 
 		const timestamp = Date.now();
-		current = await loadJson(`${baseUrl}/current.json?version=${timestamp}`);
-		console.log({ current });
+		$currentGame = await loadJson(
+			`${baseUrl}/current.json?version=${timestamp}`
+		);
 
-		const gameUrl = `${baseUrl}/games/${current.game}.json?version=${timestamp}`;
+		const gameUrl = `${baseUrl}/games/${$currentGame.game}.json?version=${timestamp}`;
 		data = await loadJson(gameUrl);
 	});
 </script>
