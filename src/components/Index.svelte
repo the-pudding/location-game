@@ -17,7 +17,7 @@
 	let visible;
 	let game;
 
-	$: game = currentGame?.game;
+	$: game = $currentGame?.game;
 	$: latitude = data?.circle?.latitude;
 	$: longitude = data?.circle?.longitude;
 	$: images = data?.images;
