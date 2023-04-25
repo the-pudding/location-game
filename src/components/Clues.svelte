@@ -1,5 +1,6 @@
 <script>
 	import { getContext } from "svelte";
+	import { base } from "$app/paths";
 	import { page } from "$app/stores";
 	import Slider from "$components/helpers/Slider.svelte";
 	import Slide from "$components/helpers/Slider.Slide.svelte";
@@ -13,6 +14,7 @@
 		currentGame
 	} from "$stores/misc.js";
 	import { encode } from "$utils/encrypt.js";
+	import generateId from "$utils/generateId.js";
 
 	export let images;
 
@@ -32,8 +34,10 @@
 		current >= $clueIndex || current === NUM_GUESSES - 1 ? "right" : null;
 	$: disable = [left, right].filter((d) => d);
 	$: id = encode($currentGame.game - 1);
-	$: href = `/?uuid=3af7v&rs=${id}&upc=1fx3`;
-	$: prevLink = `(<a target="_self" href="${href}">prev</a>)`;
+	$: uuid = generateId(4);
+	$: upc = generateId(5);
+	$: href = `/?uuid=${uuid}v&rs=${id}&upc=${upc}`;
+	$: prevLink = `(<a target="_self" href="${base}${href}">prev</a>)`;
 </script>
 
 <div class="wrapper">
