@@ -1,6 +1,7 @@
 <script>
 	import { onMount, getContext } from "svelte";
 	import { base } from "$app/paths";
+	import { page } from "$app/stores";
 	import { shuffle } from "d3";
 	import { currentGame } from "$stores/misc.js";
 	import loadJson from "$utils/loadJson.js";
@@ -9,6 +10,7 @@
 	import Footer from "$components/Footer.svelte";
 	import About from "$components/About.svelte";
 	import Stats from "$components/Stats.svelte";
+	import { decode } from "$utils/encrypt.js";
 
 	const copy = getContext("copy");
 	const baseUrl = "https://pudding.cool/games/where-data";
@@ -32,10 +34,19 @@
 		window.addEventListener("resize", onResize);
 		onResize();
 
+		const rs = $page.url.search.split("rs=")[1];
+		const override = rs?.split("&")[0];
+
 		const timestamp = Date.now();
-		$currentGame = await loadJson(
-			`${baseUrl}/current.json?version=${timestamp}`
-		);
+
+		if (override) {
+			const id = decode(override);
+			$currentGame = { game: id };
+			window.history.replaceState({}, "", `${window.location.pathname}`);
+		} else
+			$currentGame = await loadJson(
+				`${baseUrl}/current.json?version=${timestamp}`
+			);
 
 		const gameUrl = `${baseUrl}/games/${$currentGame.game}.json?version=${timestamp}`;
 		data = await loadJson(gameUrl);

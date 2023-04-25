@@ -1,9 +1,9 @@
 <script>
 	import { getContext } from "svelte";
+	import { page } from "$app/stores";
 	import Slider from "$components/helpers/Slider.svelte";
 	import Slide from "$components/helpers/Slider.Slide.svelte";
 	import Tap from "$components/helpers/Tap.svelte";
-
 	import Image from "$components/Clues.Image.svelte";
 	import mq from "$stores/mq.js";
 	import {
@@ -12,6 +12,7 @@
 		gameOver,
 		currentGame
 	} from "$stores/misc.js";
+	import { encode } from "$utils/encrypt.js";
 
 	export let images;
 
@@ -30,14 +31,20 @@
 	$: right =
 		current >= $clueIndex || current === NUM_GUESSES - 1 ? "right" : null;
 	$: disable = [left, right].filter((d) => d);
+	$: id = encode($currentGame.game - 1);
+	$: href = `/?uuid=3af7v&rs=${id}&upc=1fx3`;
+	$: prevLink = `(<a target="_self" href="${href}">prev</a>)`;
 </script>
 
 <div class="wrapper">
 	<div class="info">
 		<!-- <p class="tagline">{tagline}</p> -->
 		<p class="current">
-			<strong>#{$currentGame?.game + 1}</strong>
-			{$currentGame?.date}
+			<strong
+				>#{$currentGame?.game + 1}
+				{#if $currentGame.game > 0}{@html prevLink}{/if}</strong
+			>
+			<!-- {$currentGame?.date} -->
 		</p>
 		<p class="counter">{current + 1} of {count}</p>
 	</div>
@@ -76,6 +83,7 @@
 		flex-direction: row;
 		justify-content: space-between;
 		padding: 8px 0;
+		z-index: calc(var(--z-overlay) + 1);
 	}
 
 	.info p {
