@@ -5,8 +5,9 @@
 	const timestamp = Date.now();
 	const baseData = "https://pudding.cool/games/where-data/games/";
 
+	// have up to 600 before needing to run create-games
 	let reveal;
-	$: start = 290;
+	$: start = 500;
 	$: end = start + 10;
 </script>
 
@@ -24,6 +25,7 @@
 						<img {src} alt={title} />
 						<figcaption>{@html credit}</figcaption>
 					</figure>
+					<small>{url}</small>
 				</li>
 			{/each}
 		</ul>
