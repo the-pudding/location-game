@@ -10,7 +10,7 @@
 	$: title = image.title;
 	$: credit = image.credit;
 	$: url = image.url;
-	$: width = $viewport.width < 400 ? 600 : 1200;
+	$: width = $viewport.width < 400 ? 640 : 1280;
 	$: prefix = reveal ? "hide" : "show";
 	$: suffix = reveal ? "" : " (spoilers!)";
 	$: src = getWikimediaSource({ url, width });
