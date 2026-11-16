@@ -75,7 +75,7 @@
 	function setTileLayer(i) {
 		if (i === 0)
 			L.tileLayer(
-				"https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+				"https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=cb1_5aem_1_973788ae064dbf6f5d7fb89c",
 				{
 					attribution:
 						'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -84,11 +84,14 @@
 				}
 			).addTo(map);
 		else
-			L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-				attribution:
-					'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-				maxZoom
-			}).addTo(map);
+			L.tileLayer(
+				"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?key=cb1_5aem_1_973788ae064dbf6f5d7fb89c",
+				{
+					attribution:
+						'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+					maxZoom
+				}
+			).addTo(map);
 	}
 
 	function showAnswer() {
